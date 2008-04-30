@@ -1,0 +1,63 @@
+
+         PVM version 3.4:  Parallel Virtual Machine System
+               University of Tennessee, Knoxville TN.
+           Oak Ridge National Laboratory, Oak Ridge TN.
+                   Emory University, Atlanta GA.
+      Authors:  J. J. Dongarra, G. E. Fagg, G. A. Geist,
+                 J. A. Kohl, R. J. Manchek, P. Mucci,
+         P. M. Papadopoulos, S. L. Scott, and V. S. Sunderam
+                   (C) 1997 All Rights Reserved
+
+                              NOTICE
+
+ Permission to use, copy, modify, and distribute this software and
+ its documentation for any purpose and without fee is hereby granted
+ provided that the above copyright notice appear in all copies and
+ that both the copyright notice and this permission notice appear in
+ supporting documentation.
+
+ Neither the Institutions (Emory University, Oak Ridge National
+ Laboratory, and University of Tennessee) nor the Authors make any
+ representations about the suitability of this software for any
+ purpose.  This software is provided ``as is'' without express or
+ implied warranty.
+
+ PVM version 3 was funded in part by the U.S. Department of Energy,
+ the National Science Foundation and the State of Tennessee.
+
+________________________________________________________________________
+
+PVM for Rocks Users
+
+FAQ
+1. What version of PVM is used
+2. What has Rocks added or changed from PVM
+3. How do I compile examples;
+
+
+1. What version of PVM is used?
+As of version 4.3 of Rocks:  PVM 3.4.4 as supplied and compiled by RedHat/CentOS. Prior to version 4.3 of Rocks, a patched version of PVM was used that was for Beowulf clusters (called beolin).  The default version is the standard workstation version of PVM. It will work within a single cluster and among nodes that have direct connectivity. It does not support using PVM to glue together two (or more) clusters with private-only interfaces.
+
+2. What has Rocks added or changed from PVM?
+The basic is RPM is as-supplied by RedHat/CentOS.  We have added profiles for Bourne shell and C-shell users. This Readme is added. We have tarred up the examples directory with a slightly modified Makefile.aimk. Files added are:
+             /etc/profile.d/pvm.sh
+             /etc/profile.d/pvm.csh
+             /usr/share/pvm3/Readme.rocks
+             /usr/share/pvm3/pvm3-examples.tar
+
+3. How do I compile examples?
+The simplest thing to do is for a user in their home directory to do the following
+    % cd $HOME
+    % tar xf /usr/share/pvm3/pvm3-examples.tar
+    % cd pvm3/examples
+    % aimk timing timing_slave
+
+The last step will create PVM executables in $HOME/pvm3/bin/$PVM_ARCH. You can then spawn and test as per the usual pvm proedures.  A quick start would be as follows
+
+% pvm
+pvm> spawn -> timing 
+pvm> halt
+%
+
+
+   

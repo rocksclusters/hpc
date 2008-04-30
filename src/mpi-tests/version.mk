@@ -1,0 +1,3 @@
+NAME	= mpi-tests
+PKGROOT	= /opt/mpi-tests
+RELEASE	= 1

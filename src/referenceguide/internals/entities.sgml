@@ -1,0 +1,4 @@
+<!ENTITY dbreport SYSTEM "dbreport.sgml">
+<!ENTITY database SYSTEM "database.sgml">
+
+

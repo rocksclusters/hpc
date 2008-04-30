@@ -1,0 +1,19 @@
+<chapter id="internals" xreflabel="Rocks Internals">
+<title> Internals  </title>
+
+<para>
+This chapter presents techniques and structures we use to configure nodes in
+the Rocks system. We provide a detailed reference of the Cluster SQL database
+that tracks nodes and coordinates installation activities in the cluster. We
+also discuss the dbreport interface and its roll in generating UNIX
+configuration files.
+
+</para>
+
+&dbreport;
+
+&database;
+
+
+</chapter>
+

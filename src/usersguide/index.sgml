@@ -1,0 +1,63 @@
+<!--
+$Id: index.sgml,v 1.1 2008/04/14 22:31:08 bruno Exp $
+
+@Copyright@
+@Copyright@
+
+$Log: index.sgml,v $
+Revision 1.1  2008/04/14 22:31:08  bruno
+new HPC roll user's guide
+
+Revision 1.2  2006/09/21 00:19:26  mjk
+*** empty log message ***
+
+Revision 1.1  2006/09/14 23:54:35  mjk
+*** empty log message ***
+
+
+-->
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V3.1//EN" [
+	<!ENTITY % entities SYSTEM "entities.sgml">
+	%entities;
+]>
+
+<book>
+<bookinfo>
+
+	<title> HPC Roll: Users Guide </title>
+
+	<subtitle>
+		<inlinemediaobject>
+			<imageobject>
+				<imagedata fileref="images/hpc.png">
+			</imageobject>
+		</inlinemediaobject>
+	</subtitle>
+
+        <edition>Version &document_version;</edition>
+        <pubdate>&document_pubdate;</pubdate>
+        <copyright id="copyright" xreflabel="copyright">
+                <year>&document_year;</year>
+                <holder>&document_copyright;</holder>    
+        </copyright>
+
+        <releaseinfo>
+                <ulink url="roll-hpc-usersguide.pdf">(PDF version)</ulink>
+        </releaseinfo>
+
+        <legalnotice>
+                <para>
+                This document is subject to the Rocks License 
+                (see <xref linkend="rocks-copyright">).
+                </para>
+        </legalnotice>
+
+</bookinfo>
+
+&source_preface;
+&source_roll-overview;
+&source_installing;
+&source_using;
+&source_appendix;
+
+</book>

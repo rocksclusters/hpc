@@ -1,0 +1,22 @@
+<chapter id="kickstart-graph" xreflabel="kickstart graph">
+<title> Kickstart Graph </title>
+
+<para>
+In this chapter we give the details of the Rocks XML kickstart graph language,
+used to generate kickstart files. Here you will find a reference for Kickstart
+Node XML tags, edge tags, and order tags.
+
+</para>
+
+<para>
+We also will discuss the roll of Linux distributions in Rocks.
+
+</para>
+
+
+&kickstart;
+&distributions;
+
+
+</chapter>
+

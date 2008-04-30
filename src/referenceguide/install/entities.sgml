@@ -1,0 +1,4 @@
+<!ENTITY kickstart SYSTEM "kickstart.sgml">
+<!ENTITY distributions SYSTEM "distributions.sgml">
+
+

@@ -1,0 +1,868 @@
+<section id="database" xreflabel="Database">
+<title>The Cluster Database</title>
+
+<para>
+This section describes the SQL Database Schema used by the Rocks system. The
+free <emphasis>MySQL</emphasis> DBMS server manages the schema in a single
+database named <literal>cluster</literal>. This database forms the backbone of
+the Rocks system, coordinating tasks as diverse as kickstart, node typing,
+configuration file building, and versioning.
+
+</para>
+
+<section id="schema">
+<title>Relational Schema</title>
+<para>
+This diagram describes the database relations in a simplified standard notation.
+
+</para>
+<para>
+<inlinemediaobject>
+ <imageobject>
+  <imagedata fileref="images/schema.png" scale=50>
+ </imageobject>
+</inlinemediaobject>
+</para>
+</section>
+
+<section id="tables">
+<title>Tables</title>
+
+<para>
+A subset of the Information Engineering (IE) notation method will be
+used to describe the database tables. Primary keys are marked with an
+asterisk (<literal>*</literal>), and foreign keys are designated by
+(<literal>@</literal>). Attempts have been made to ensure this schema
+is at least in the Second Normal Form (2NF).
+</para>
+
+<para>
+For each table, we present its structure followed by an explanation
+of its columns.
+
+</para>
+
+<section id="table-nodes">
+<title>Nodes</title>
+<para>
+Describes nodes in the cluster. A central table in the schema. The nodes table
+holds one row for each node in the cluster, including frontend, compute, and
+other appliance types. The node's location in the physical cluster (which rack
+it lies in on the floor) is specified in this table as well.
+
+</para>
+
+<table frame=all> <title> Nodes </title>
+<tgroup cols=2 align=left colsep=1 rowsep=1>
+
+<thead>
+<row>
+    <entry> Field </entry>
+    <entry> Type </entry>
+</row>
+</thead>
+
+<tbody>
+
+<row>
+    <entry> ID* </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Name </entry>
+    <entry> varchar(128) </entry>
+</row>
+
+<row>
+    <entry> Membership@ </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> CPUs </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Rack </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Rank </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Comment </entry>
+    <entry> varchar(128) </entry>
+</row>
+
+</tbody>
+</tgroup>
+</table>
+<variablelist>
+
+<varlistentry>
+<term>ID</term>
+<listitem><para>
+A primary key integer identifier. Auto incremented.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Name</term>
+<listitem><para> 
+The name of the private network interface for this node. This violates the
+second normal form (2NF) of the schema (this name should only exist in the
+networks table), but serves as a hint for readability.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Membership</term>
+<listitem>
+<para> 
+A link to the Memberships table; cannot be null. Specifies what type of node
+this is.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>CPUs</term>
+<listitem><para> 
+The number of Processors in this node. Defaults to 1. Although this column
+violates the second normal form, it is more useful here than in a separate
+table.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Rack</term>
+<listitem><para> 
+The Y-axis coordinate of this node in euclidean space. Zero is the leftmost
+rack on the floor by convention. Note we only use a 2D matrix to locate nodes,
+the plane (Z-axis) is currently always zero.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Rank</term>
+<listitem><para> 
+The X-axis of this node in euclidean space. Zero is closest to the floor (the
+bottom-most node) by convention.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>IP</term>
+<listitem><para>
+The IPv4 Internet Protocol address of this node in decimal-dot notation.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Comment</term>
+<listitem><para>
+A textual comment about this node.
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+</section>
+
+
+<section id="table-networks">
+<title>Networks</title>
+<para>
+The network interfaces for a node.
+
+</para>
+
+<table frame=all> <title> Networks </title>
+<tgroup cols=2 align=left colsep=1 rowsep=1>
+
+<thead>
+<row>
+    <entry> Field </entry>
+    <entry> Type </entry>
+</row>
+</thead>
+
+<tbody>
+
+<row>
+    <entry> ID* </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Node@ </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> MAC </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+<row>
+    <entry> IP </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+<row>
+    <entry> Netmask </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+<row>
+    <entry> Gateway </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+<row>
+    <entry> Name </entry>
+    <entry> varchar(128) </entry>
+</row>
+
+<row>
+    <entry> Device </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+<row>
+    <entry> Module </entry>
+    <entry> varchar(128) </entry>
+</row>
+
+</tbody>
+</tgroup>
+</table>
+<variablelist>
+
+<varlistentry>
+<term>ID</term>
+<listitem><para>
+A primary key integer identifier. Auto incremented.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Node</term>
+<listitem><para>
+A link to the nodes table. A foreign key, cannot be null.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>MAC</term>
+<listitem><para> 
+The 6-byte Media Access Layer address (Layer 2) of
+this interface in hex-colon notation like "a6:45:34:0f:44:99".
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>IP</term>
+<listitem><para>
+The IPv4 Internet Protocol address of this interface in decimal-dot notation
+like "10.255.255.254".
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Netmask</term>
+<listitem><para>
+The subnet mask of the IP address. Specified like "255.0.0.0". 
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Gateway</term>
+<listitem><para>
+The IP gateway or router address for this interface.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Name</term>
+<listitem>
+<para> 
+The hostname for this network interface. The Rocks convention is
+<varname>"compute-[Rack]-[Rank]"</varname> for compute nodes.
+
+</para>
+
+<para>
+If the device name is "eth0" this is the "private" network interface for the
+node. The interface name is placed in the .local domain and served via DNS. All
+other hostnames must be fully-qualified.
+
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Device</term>
+<listitem>
+<para> 
+The Linux device name for this NIC. The private (primary) interface always
+has the name "eth0". 
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Module</term>
+<listitem><para> 
+The Linux device driver name for this interface. Hardware specific.
+
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+</section>
+
+
+<section id="table-app_globals">
+<title>App_Globals</title>
+<para>
+This table contains Key=Value pairs used for essential services such
+as Kickstart. Examples include the Keyboard layout, Public Gateway,
+Public Hostname, DNS servers, IP mask, Cluster Owner, Admin email,
+etc.
+
+</para>
+<table frame=all> 
+<title> App_Globals </title>
+<tgroup cols=2 align=left colsep=1 rowsep=1>
+
+<thead>
+<row>
+    <entry> Field </entry>
+    <entry> Type </entry>
+</row>
+</thead>
+
+<tbody>
+
+<row>
+    <entry> ID* </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Membership@ </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Service </entry>
+    <entry> varchar(64) </entry>
+</row>
+
+<row>
+    <entry> Component </entry>
+    <entry> varchar(64) </entry>
+</row>
+
+<row>
+    <entry> Value </entry>
+    <entry> text </entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<variablelist>
+
+<varlistentry>
+<term>ID</term>
+<listitem><para>
+A primary key integer identifier. Auto incremented.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Membership</term>
+<listitem><para> 
+A foreign key that references
+the <varname>ID</varname> column in the Membership table.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Service</term>
+<listitem><para> 
+The service name that will use this KEY=VALUE
+pair. Examples are <quote>Kickstart</quote> and <quote>Info</quote>. This
+is essentially the first part of a two-level naming scheme.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Component</term>
+<listitem><para> 
+The second level name. Together the Service and Component names correspond to
+the <emphasis>name</emphasis> attribute of the <varname>&lt;var
+name="Service_Component"/&gt;</varname> XML tag used in the kickstart
+generation process.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Value</term>
+<listitem><para>
+The value of this row. Can be any textual data.
+</para></listitem>
+</varlistentry>
+
+<!-- document app_globus key-value pairs -->
+
+</variablelist>
+</section>
+
+
+<section id="table-memberships">
+<title>Memberships</title>
+<para>
+This table specifies the distribution version and appliance type for a set of
+nodes. An alternative name for this table would be <emphasis>groups</emphasis>,
+however that is a reserved word in SQL. The memberships table names a group of
+nodes in the cluster and allows multiple memberships to tie into one appliance
+type.
+
+</para>
+
+<table frame=all> <title> Memberships </title>
+<tgroup cols=2 align=left colsep=1 rowsep=1>
+
+<thead>
+<row>
+    <entry> Field </entry>
+    <entry> Type </entry>
+</row>
+</thead>
+
+<tbody>
+
+<row>
+    <entry> ID* </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Name </entry>
+    <entry> varchar(64) </entry>
+</row>
+
+
+<row>
+    <entry> Appliance@ </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Distribution@ </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Compute </entry>
+    <entry> enum('yes','no') </entry>
+</row>
+
+</tbody>
+</tgroup>
+</table>
+<variablelist>
+
+<varlistentry>
+<term>ID</term>
+<listitem><para>
+A primary key integer identifier. Auto incremented.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Node</term>
+<listitem><para> 
+The name of this membership. A type of node in the
+cluster, like "Frontend", "Compute", "Power Unit" or similar. The
+software installed on nodes in a given membership is defined by an
+appliance ID.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Appliance</term>
+<listitem><para> 
+A foreign key that references
+the <varname>ID</varname> column in the Appliances table. Helps define
+the software installed on nodes in this membership, and therefore
+their behavior.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Distribution</term>
+<listitem><para> 
+A foreign key that references
+the <varname>ID</varname> column in the Distributions table. The
+second key used to define the software for nodes in this membership.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Compute</term>
+<listitem><para> 
+Either "yes" or "no". Specifies whether this type of
+node will be used to run parallel jobs.
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+</section>
+
+
+<section id="table-appliances">
+<title>Appliances</title>
+<para>
+This table defines the available appliance types. Each node in the cluster may
+classify itself as a single appliance type. The <varname>Graph</varname> and
+<varname>Node</varname> attributes define the starting point in the Rocks
+software configuration graph (See <xref linkend="graph-xml">), which wholly
+specifies the software installed on a node.
+
+</para>
+
+<table frame=all> <title> Appliances </title>
+<tgroup cols=2 align=left colsep=1 rowsep=1>
+
+<thead>
+<row>
+    <entry> Field </entry>
+    <entry> Type </entry>
+</row>
+</thead>
+
+<tbody>
+
+<row>
+    <entry> ID* </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Name </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+<row>
+    <entry> ShortName </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+<row>
+    <entry> Graph </entry>
+    <entry> varchar(64) </entry>
+</row>
+
+<row>
+    <entry> Node </entry>
+    <entry> varchar(64) </entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<variablelist>
+
+<varlistentry>
+<term>ID</term>
+<listitem><para>
+A primary key integer identifier. Auto incremented.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Name</term>
+<listitem><para> 
+The name of this appliance. Examples
+are <quote>frontend</quote> and <quote>compute</quote>.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>ShortName</term>
+<listitem><para>
+A nickname for this appliance.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Graph</term>
+<listitem><para> 
+Specifies which software configuration graph to use when creating the kickstart
+file for this appliance. The default of <literal>default</literal> is generally
+used.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Node</term>
+<listitem>
+<para> 
+Specifies the name of the root node in the configuration graph to use when
+creating the kickstart file for this appliance. The software packages for this
+appliance type is wholly defined by a traversal of the configuration graph
+beginning at this root node.
+
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>
+
+
+<section id="table-distributions">
+<title>Distributions</title>
+
+<para>
+This table connects a membership group to a versioned Rocks distribution, and
+plays an important role in the Rocks kickstart generation process. The
+<varname>Release</varname> relates to the RedHat distribution version, e.g.
+<quote>7.2</quote>, while the <varname>Name</varname> specifies where to find
+both the Rocks configuration tree and RPM packages. The location of these
+resources will be under the <filename
+class=directory>/home/install/[Name]/[Release]/</filename> directory.
+
+</para>
+
+<table frame=all> 
+<title> Distributions </title>
+<tgroup cols=2 align=left colsep=1 rowsep=1>
+
+<thead>
+<row>
+    <entry> Field </entry>
+    <entry> Type </entry>
+</row>
+</thead>
+
+<tbody>
+
+<row>
+    <entry> ID* </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Name </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+
+<row>
+    <entry> Release </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+<row>
+    <entry> Lang </entry>
+    <entry> varchar(32) </entry>
+</row>
+
+</tbody>
+</tgroup>
+</table>
+
+<variablelist>
+
+<varlistentry>
+<term>ID</term>
+<listitem><para>
+A primary key integer identifier. Auto incremented.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Name</term>
+<listitem><para> 
+Specifies where to find the Rocks configuration tree graph files. The
+<emphasis>Name</emphasis> field of the configuration graph located in the
+<filename class=directory>/home/install/[Name]/[Release]/</filename> directory.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Release</term>
+<listitem><para> 
+Gives the the RedHat distribution version this configuration tree is based on ,
+e.g. <quote>7.2</quote>. The <emphasis>Release</emphasis> field in the graph
+location <quote><filename
+class=directory>/home/install/[Name]/[Release]/</filename></quote> directory.
+
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Lang</term>
+<listitem><para> 
+The language of this distribution. A two-letter
+language abbreviation like "en" or "fr".
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+</section>
+
+
+<section id="table-versions">
+<title>Versions</title>
+<para>
+This table is intended to provide database schema versioning. It is
+reserved for future use.
+</para>
+
+<table frame=all> <title> Versions </title>
+<tgroup cols=2 align=left colsep=1 rowsep=1>
+
+<thead>
+<row>
+    <entry> Field </entry>
+    <entry> Type </entry>
+</row>
+</thead>
+
+<tbody>
+
+<row>
+    <entry> TableName </entry>
+    <entry> varchar(64) </entry>
+</row>
+
+<row>
+    <entry> Major </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Minor </entry>
+    <entry> int(11) </entry>
+</row>
+
+</tbody>
+</tgroup>
+</table>
+
+<variablelist>
+
+<varlistentry>
+<term>TableName</term>
+<listitem><para>
+The name of a table in this database schema.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Major</term>
+<listitem><para> 
+The major version number of this table. Usually the
+first integer in the version string.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Minor</term>
+<listitem><para> 
+The minor version number of this table. The second
+integer in the version string.
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+</section>
+
+
+<section id="table-aliases">
+<title>Aliases</title>
+<para>
+
+This table contains any user-defined aliases for nodes.
+</para>
+
+<table frame=all> <title> Aliases </title>
+<tgroup cols=2 align=left colsep=1 rowsep=1>
+
+<thead>
+<row>
+    <entry> Field </entry>
+    <entry> Type </entry>
+</row>
+</thead>
+
+<tbody>
+
+<row>
+    <entry> ID* </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Node@ </entry>
+    <entry> int(11) </entry>
+</row>
+
+<row>
+    <entry> Name </entry>
+    <entry> varchar(32) </entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+
+<variablelist>
+
+<varlistentry>
+<term>ID</term>
+<listitem><para>
+A primary key integer identifier. Auto incremented.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Node</term>
+<listitem><para>
+A foreign key that references
+the <varname>ID</varname> column in the Nodes table.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Name</term>
+<listitem><para>
+The alias name. Usually a shorter version of the hostname.
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+</section>
+
+</section>
+
+</section>
+

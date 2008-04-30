@@ -1,0 +1,59 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+<description>
+
+PVM
+
+</description>
+
+<changelog>
+$Log: pvm.xml,v $
+Revision 1.10  2007/06/07 22:02:30  phil
+just install packages
+
+Revision 1.9  2005/09/02 00:12:08  bruno
+better PVM configuration (thanks to Jose Luis Guisado)
+
+Revision 1.8  2005/02/17 01:53:58  bruno
+moved pvm source code into the hpc roll
+
+Revision 1.7  2005/02/16 00:40:04  mjk
+graph cleanup
+
+Revision 1.6  2005/02/01 23:37:10  mjk
+remove roll attrs
+
+Revision 1.5  2004/02/03 00:57:25  mjk
+decolorize / derollize
+
+Revision 1.4  2004/01/30 00:22:54  mjk
+color hpc green
+
+Revision 1.3  2003/10/20 22:02:33  fds
+For bruno
+
+Revision 1.2  2003/07/16 18:52:45  bruno
+changes all file creation code to use 'file' tag
+
+Revision 1.1  2003/07/07 20:47:51  bruno
+initial release
+
+Revision 1.3  2002/10/09 20:27:24  bruno
+updated 'contrib' package names
+
+Revision 1.2  2002/07/27 00:20:57  bruno
+included changes from craig hagen at cray
+
+Revision 1.1  2001/10/05 18:59:49  mjk
+*** empty log message ***
+
+</changelog>
+
+<package>pvm</package>
+<package>pvm-gui</package>
+<package>rocks-pvm</package>
+
+</kickstart> 
+

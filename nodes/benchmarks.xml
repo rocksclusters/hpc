@@ -1,0 +1,71 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+<description>
+Benchmark applications
+</description>
+
+
+<changelog>
+$Log: benchmarks.xml,v $
+Revision 1.10  2008/04/07 23:05:34  bruno
+nuke atlas and hpl
+
+Revision 1.9  2005/02/17 01:32:01  bruno
+moved iperf source into the hpc roll
+
+Revision 1.8  2005/02/17 01:05:18  bruno
+moved stream into the hpl roll
+
+Revision 1.7  2005/02/16 00:40:04  mjk
+graph cleanup
+
+Revision 1.6  2005/02/01 23:37:10  mjk
+remove roll attrs
+
+Revision 1.5  2004/03/28 15:40:38  bruno
+now using iozone SRPM from official web site
+
+Revision 1.4  2004/02/03 00:57:25  mjk
+decolorize / derollize
+
+Revision 1.3  2004/01/30 00:22:54  mjk
+color hpc green
+
+Revision 1.2  2003/07/08 18:37:14  bruno
+collapsed hpl-eth and hpl-myri into just hpl
+
+Revision 1.1  2003/07/07 20:47:51  bruno
+initial release
+
+Revision 1.5  2002/11/14 23:43:24  bruno
+added atlas and hpl-eth back in
+
+Revision 1.4  2002/11/13 20:19:19  mjk
+more ia64 changes
+
+Revision 1.3  2002/10/10 05:01:24  bruno
+added iozone
+
+Revision 1.2  2002/10/09 20:27:24  bruno
+updated 'contrib' package names
+
+Revision 1.1  2002/10/02 19:28:49  bruno
+put all benchmarks into one .xml file
+
+</changelog>
+
+
+<!-- STREAM - memory bandwidth benchmark -->
+<package>stream</package>
+
+<!-- iperf - network performance tester -->
+<package>iperf</package>
+
+<!-- iozone - file system benchmark -->
+<package>iozone</package>
+
+
+</kickstart> 
+

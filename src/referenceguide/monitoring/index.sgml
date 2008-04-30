@@ -1,0 +1,21 @@
+<chapter id="monitoring" xreflabel="Monitoring">
+<title>Monitoring Systems</title>
+
+<para>
+In this section we describe the extensible Monitoring structures in Rocks. 
+</para>
+
+<para>
+Accurately and adequately monitoring a complex system such as a
+cluster is a difficult task. Our monitoring systems are for the most
+part modular, and accept user-defined additions. This section provides
+information to write your own cluster metrics and alarms.
+
+</para>
+
+
+&gmetric;
+&news;
+
+</chapter>
+

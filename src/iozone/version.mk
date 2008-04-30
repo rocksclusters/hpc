@@ -1,0 +1,6 @@
+NAME		= iozone
+VERSION		= 3.291
+RELEASE		= 0
+
+IOZONE_VERSION	= 3_291
+

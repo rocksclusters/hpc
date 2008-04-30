@@ -1,0 +1,32 @@
+<section id="roll-nodes" xreflabel="Nodes Directory">
+<title> Nodes Directory </title>
+
+<para>
+Inside the <computeroutput>nodes</computeroutput> directory, you will put your
+Rocks-based XML configuration files.  These files are used to install packages
+and to configure their respective services. See the <xref
+linkend="kickstart-xml"> section for node file syntax.
+
+</para>
+
+<para>
+In the Intel Roll, the file
+<computeroutput>roll/intel/nodes/intel.xml</computeroutput> has the package
+names for the compilers to be installed on specific hardware architectures.
+For example, the <computeroutput>intel-icc8</computeroutput> is installed with
+the line:
+
+</para>
+
+<screen>
+&lt;package&gt;intel-icc8&lt;/package&gt;
+</screen>
+
+<para>
+The <computeroutput>&lt;post&gt;</computeroutput> section of the node
+<computeroutput>roll/intel/nodes/intel.xml</computeroutput>
+shows how the packages are configured after they are installed.
+</para>
+
+</section>
+

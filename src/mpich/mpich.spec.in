@@ -1,0 +1,110 @@
+Summary: A Portable Implementation of MPI built with the GNU Compilers
+Name: @NAME@-%{interconnect}-%{compiler}
+Version: @VERSION@
+Release: @RELEASE@
+License: freely distributable
+Group: Development/Libraries
+Source: ftp://ftp.mcs.anl.gov/pub/mpi/mpich-@VERSION@.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
+
+
+%description
+MPICH is a freely available, portable implementation of MPI (Message Passing
+Interface), the Standard for message-passing libraries. This version is
+configured to use ssh instead of rsh when using mpirun. This is the ethernet
+version of MPICH.
+
+
+%prep
+%setup -q -n mpich-%{version}
+tar zvfx mpich-%{version}.tar.gz
+(cd patch-files/ && find . -type f | grep -v CVS | cpio -pduv ..)
+
+
+##
+## BUILD
+##
+%build
+export MPIINSTALL_OPTS=%{mpi_install_opts}
+export RSHCOMMAND=%{rsh_command}
+
+export CC=%{use_cc}
+export FC=%{use_fc}
+export F90=%{use_f90}
+export CXX=%{use_cxx}
+
+%ifarch ia64
+export CFLAGS="-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
+%else
+export CFLAGS="$RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
+%endif
+
+if [ %{interconnect} == "ethernet" ]
+then
+	INSTALL_DIR=%{mpich_dir}/%{compiler}
+else
+	INSTALL_DIR=%{mpich_dir}/%{interconnect}/%{compiler}
+fi
+
+mkdir -p $INSTALL_DIR
+mount -t tmpfs tmpfs $INSTALL_DIR
+
+( cd mpich-%{version} ;
+	sh ./configure --prefix=$INSTALL_DIR -c++=$CXX %{mpich_configure}
+
+	make
+	make install
+
+	export MPIDIR=$INSTALL_DIR
+	make -C tests
+	make -C tests install
+
+	make -C cleanup
+	make -C cleanup install
+)
+
+mkdir -p $RPM_BUILD_ROOT/$INSTALL_DIR
+cp -r $INSTALL_DIR/ $RPM_BUILD_ROOT/$INSTALL_DIR/..
+killall mpd || true
+umount $INSTALL_DIR
+
+
+
+###
+### INSTALL
+###
+%install
+# fix broken links
+
+if [ %{interconnect} == "ethernet" ]
+then
+	INSTALL_DIR=%{mpich_dir}/%{compiler}
+else
+	INSTALL_DIR=%{mpich_dir}/%{interconnect}/%{compiler}
+fi
+
+if [ -d $RPM_BUILD_ROOT$INSTALL_DIR/share/examples ]
+then
+	cd $RPM_BUILD_ROOT$INSTALL_DIR/share/examples
+	rm mpirun
+	ln -sf ../bin/mpirun mpirun
+fi
+
+# get rid of the $RPM_BUILD_ROOT
+find $RPM_BUILD_ROOT/opt -type f \
+	-exec perl -p -i -e "s|$RPM_BUILD_ROOT||g;" {} \;
+
+
+##
+## FILES
+##
+%files
+%{mpich_dir}
+
+
+##
+## CLEAN
+##
+%clean
+rm -rf $RPM_BUILD_ROOT
+

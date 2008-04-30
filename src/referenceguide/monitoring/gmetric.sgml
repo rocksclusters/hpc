@@ -1,0 +1,250 @@
+<section id="gmetric">
+<title> Ganglia Gmetric </title>
+
+<para>
+Rocks uses the <emphasis>Ganglia</emphasis> system to monitor the cluster. We
+have defined several extension structures to Ganglia that allow you to easily
+add metrics and alarms to your cluster monitoring system.
+
+</para>
+
+<para>
+A single value to be monitored is called a <emphasis>metric</emphasis> in the
+Ganglia system. Metrics are measured on nodes of the cluster, and Ganglia
+communicates them to the frontend. This section describes how to write your
+own metric monitors.
+
+</para>
+
+<section id="greceptor-metric">
+<title>Greceptor Metric</title>
+
+<para>
+To define a new metric to monitor, we write a Metric module for the Rocks
+<emphasis>greceptor</emphasis> daemon. Throughout the monitoring chapter, we
+use "fan speed" as an example. This metric could read and monitor the speed of
+a CPU or chassis fan in a node. When the fan rpm is low, it could signal a
+malfunction that needs your attention.
+
+</para>
+
+<orderedlist>
+<listitem>
+<para>
+To monitor a value, you must be able to read it programmatically. Write a
+script that returns the fan speed as a number. It can be written in any
+language, but should have the following behavior:
+
+</para>
+
+<para>
+<screen>
+# read-fan1-speed
+3000
+#
+</screen>
+</para>
+
+<para>
+The output should contain no units or any ancillary information, 
+as they will be added later.
+
+</para>
+</listitem>
+
+<listitem>
+<para>
+The greceptor metric module that calls your script must be written
+in Python. The listing below gives an example:
+
+</para>
+
+<para>
+<screen>
+import os
+import gmon.events
+
+class FanSpeed(gmon.events.Metric):
+
+     def getFrequency(self):
+         """How often to read fan speed (in sec)."""
+         return 30
+
+     def name(self):
+         return 'fan1-speed'
+
+     def units(self):
+         return 'rpm'
+
+     def value(self):
+         speed = os.popen('read-fan1-speed').readline()
+         return int(speed)
+
+
+def initEvents():
+     return FanSpeed
+</screen>
+</para>
+
+<para>
+The class is derived from the Rocks <literal>gmon.events.Metric</literal>
+class. This module calls your 'read-fan1-speed' script to get the actual value.
+You may obtain your metric value directly using Python code if you like, just
+return its value at the end of the <literal>value()</literal> method.
+
+</para>
+
+<para>
+Greceptor will call the <literal>name(), value()</literal> functions every 30
+seconds or so. The actual frequency is uniformly random with an expectation of
+30 seconds.
+
+</para>
+
+</listitem>
+
+<listitem>
+<para>
+Make an RPM that places this file in:
+
+</para>
+
+<para>
+<literal>
+/opt/rocks/lib/python2.4/site-packages/gmon/metrics/fanspeed.py
+</literal>
+</para>
+
+<para>
+Any name ending in *.py will work.  Add the RPM to your roll and reinstall your
+compute nodes. See the <literal>hpc-ganglia</literal> package in the HPC roll
+for an example.
+
+</para>
+</listitem>
+
+<listitem>
+<para>
+The metric value should be visible in the ganglia gmond output on the frontend, which can be inspected with:
+</para>
+
+<para>
+<screen>
+$ telnet localhost 8649
+</screen>
+</para>
+
+<para>
+If the metric value is an integer or float, a graph of its value over time is visible on the Ganglia web-frontend pages, in the Cluster or Host views.
+
+</para>
+</listitem>
+
+</orderedlist>
+
+</section>
+
+<section id="greceptor-listener">
+<title>Greceptor Listener</title>
+
+<para>
+You may also define a greceptor module that listens for a particular Gmetric
+name on the Ganglia multicast channel. This is called a
+<emphasis>listener</emphasis>. Rocks uses listeners to implement 411, and setup
+the MPD job launcher ring.
+
+</para>
+
+<para>
+We will use our fan-speed example. This process installs a listener for 
+the metric we just defined. 
+
+</para>
+
+<orderedlist>
+<listitem>
+<para>
+Derive the listener from the Rocks class
+<literal>gmon.events.Listener</literal>. The name() method defines what metric
+name to listen for, it must match exactly. In this case we specify the
+'fan1-speed' name from the previous example.
+
+</para>
+
+<para>
+<screen>
+import gmon.events
+
+class FanSpeed(gmon.events.Listener):
+	"""Does something when we hear a fan-speed metric."""
+
+	fanthresh = 500
+
+	def name(self):
+		"""The metric name we're interested in."""
+
+		return "fan1-speed"
+
+
+	def run(self, metric):
+		"""Called every time a metric with our name passes on the 
+		Ganglia multicast network in the cluster."""
+
+		fanspeed = float(metric["VAL"])
+
+		if fanspeed < self.fanthresh:
+			self.getWorried()
+
+
+	def getWorried(self):
+		"""Does something appropriate when the fan speed is too low."""
+
+		# Some action
+		pass
+
+
+def initEvents():
+	return FanSpeed
+</screen>
+</para>
+
+<para>
+Greceptor will call the run() method whenever a 'fan1-speed' metric passes on
+the Ganglia multicast channel. The <literal>metric</literal> argument to run()
+is a Python dictionary keyed with the attribute names from a &lt;METRIC&gt;
+Ganglia metric. The source of the metric is given by
+<literal>metric["IP"]</literal>.
+
+</para>
+</listitem>
+
+<listitem>
+<para>
+Make an RPM that places this file in:
+
+</para>
+
+<para>
+<literal>
+/opt/rocks/lib/python2.4/site-packages/gmon/listeners/fanspeed.py
+</literal>
+</para>
+
+<para>
+Any name ending in *.py will work.  Add the RPM to your roll and reinstall your
+compute nodes. See the <literal>hpc-ganglia</literal> package in the HPC roll
+for an example.
+
+</para>
+</listitem>
+</orderedlist>
+
+<para>
+In the next section, we show how to make an alarm for a metric value using
+the Ganglia News construct.
+
+</para>
+
+</section>
+
+</section>

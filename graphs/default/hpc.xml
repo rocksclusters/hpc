@@ -1,0 +1,191 @@
+<?xml version="1.0" standalone="no"?>
+
+<graph>
+
+
+<description>
+The HPC Roll
+</description>
+
+
+<changelog>
+$Log: hpc.xml,v $
+Revision 1.44  2008/03/03 20:01:52  bruno
+hpc graph cleanup
+
+Revision 1.43  2007/12/03 20:32:00  bruno
+make HPC optional -- move critial services into base
+
+Revision 1.42  2006/07/07 20:11:34  bruno
+removed upgrade node -- now handled by restore roll
+
+Revision 1.41  2006/06/12 21:43:55  bruno
+cleanup
+
+Revision 1.40  2006/06/05 22:06:29  bruno
+moved insert-rolls from hpc to base
+
+Revision 1.39  2006/06/05 21:54:50  bruno
+moved PXE from hpc to base
+
+Revision 1.38  2006/06/05 17:57:38  bruno
+first steps towards 4.2 beta
+
+Revision 1.37  2005/10/03 20:23:57  bruno
+take out the code that indicates that a node previously PXE installed.
+
+this will force all reinstallations to use the installation kernel and initrd
+from the local hard disk.
+
+Revision 1.36  2005/09/19 22:08:36  bruno
+partitioning tuning.
+
+- the frontend and NAS appliance will no longer nuke all partitions before
+  the partitioning screen
+- a NAS appliance always displays the partitioning screen
+- added a nas-exports node to make it easier for people to customize
+  their export directories on NAS appliances
+- hardened the software raid partitioning code
+
+Revision 1.35  2005/06/01 01:47:44  bruno
+ia64 now uses same partitioning as real cpus
+
+Revision 1.34  2005/05/25 03:29:25  bruno
+need to ensure that all nodes that call 'dbreport' are after database-security
+
+Revision 1.33  2005/05/23 23:52:32  fds
+Moved to shepherd roll
+
+Revision 1.32  2005/03/16 03:36:29  fds
+Actually inserting selected rolls into database.
+
+Revision 1.31  2005/03/15 02:37:49  fds
+Insert selected rolls into the database during post processing. Must happen
+before rocks-dist is run again (in rocks-dist.xml).
+
+Revision 1.30  2005/03/08 00:56:10  fds
+Moved ganglia packages into roll. New greceptor node.
+
+Revision 1.29  2005/03/04 01:40:08  mjk
+massive graph cleanup
+
+Revision 1.28  2005/03/01 19:17:44  mjk
+whack dead node
+
+Revision 1.27  2005/03/01 17:34:02  mjk
+move 411 to hpc roll
+
+Revision 1.26  2005/02/16 01:19:49  mjk
+- per appliance firewall rules
+- empty root node (ordered last) for all appliances
+
+Revision 1.25  2005/02/16 00:40:03  mjk
+graph cleanup
+
+Revision 1.24  2004/12/22 03:06:16  bruno
+spliced out mpi-devel
+
+Revision 1.23  2004/11/02 00:47:36  fds
+Moved shepherd-client grub processing off base
+
+Revision 1.22  2004/08/24 01:58:03  fds
+Shepherd tweaks and svcs update structure.
+
+Revision 1.21  2004/05/05 00:53:01  fds
+Moved big mozilla packages off Rocks base.
+
+Revision 1.20  2004/04/26 20:12:01  fds
+Added rocks-boot-auto to frontend. It is off by default. Also put
+kickstart central host in app_globals if available.
+
+Revision 1.19  2004/04/13 20:53:51  fds
+Fixed compute node motd, and added link to news node.
+
+Revision 1.18  2004/03/24 23:37:47  fds
+Support for the everything appliance.
+
+Revision 1.17  2004/03/19 03:29:36  bruno
+frontend-wan is dead
+
+frontend-base and compute-base are the new nodes in which to derive new
+appliances
+
+Revision 1.16  2004/03/04 19:33:31  fds
+Moving from sendmail to Postfix.
+
+Revision 1.15  2004/03/04 00:04:03  bruno
+eject-cd no longer used
+
+Revision 1.14  2004/02/04 17:39:39  bruno
+on what interface do you want to install?
+
+Revision 1.13  2004/02/03 00:32:53  fds
+Ensuring the Roll screens come first.
+
+Revision 1.12  2004/02/02 21:08:10  fds
+Doing it the right way. A new frontend-wan file defines the main
+kickstart section for Wide Area kickstart installs (instead of
+hard-coding it in kcgi.)
+
+Revision 1.11  2004/01/31 19:56:47  mjk
+hpc-node removed
+
+Revision 1.10  2003/11/03 05:21:58  bruno
+removed build-host
+
+Revision 1.9  2003/10/30 23:03:06  bruno
+build appliance support
+
+Revision 1.8  2003/10/29 17:59:21  mjk
+remove pbs from roll
+
+Revision 1.7  2003/10/23 02:02:23  fds
+Sorted out ganglia graph ordering.
+
+Revision 1.6  2003/10/16 22:21:16  fds
+Kickstart graph changes for opteron.
+
+Revision 1.5  2003/10/16 18:22:04  bruno
+changes for x86_64
+
+Revision 1.4  2003/10/02 20:32:01  fds
+PXE coordination is done by dhcp, so activate it for all platforms.
+
+Revision 1.3  2003/09/26 18:33:04  bruno
+closer to 9
+
+Revision 1.2  2003/07/12 00:49:30  bruno
+all nodes install a ganglia client
+
+Revision 1.1  2003/07/07 20:47:51  bruno
+initial release
+
+</changelog>
+
+<!-- Graph Ordering for Kickstart Generation -->
+
+<order head="database-security">
+	<tail>hpc-db</tail>
+</order>
+
+
+<!-- Graph OO Framework -->
+
+<edge from="client" to="hpc-client"/>
+
+<edge from="server" to="hpc-server"/>
+<edge from="hpc-server">
+	<to>frontend</to>
+        <to arch="i386">pvm</to>
+        <to>hpc-db</to>
+</edge>
+
+<edge from="base" to="hpc-base"/>
+<edge from="hpc-base">
+        <to>benchmarks</to>
+        <to>mpi</to>
+</edge>
+
+
+</graph>
+

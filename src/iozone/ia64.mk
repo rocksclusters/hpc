@@ -1,0 +1,1 @@
+TARGET	= linux-ia64

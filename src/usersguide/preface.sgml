@@ -1,0 +1,40 @@
+<preface id="preface" xreflabel="preface">
+<title>Preface</title>
+
+
+<para>
+The primary purpose of the HPC Roll is to provide configured software
+tools that can be used to run parallel applications on your cluster.
+</para>
+
+
+<para>
+The following software packages are included in the HPC Roll:
+</para>
+
+
+<itemizedlist>
+
+<listitem>
+<para>
+MPI over ethernet environments (OpenMPI, MPICH, MPICH2)
+</para>
+</listitem>
+
+<listitem>
+<para>
+PVM
+</para>
+</listitem>
+
+<listitem>
+<para>
+Benchmarks (stream, iperf, IOzone)
+</para>
+</listitem>
+
+</itemizedlist>
+
+
+</preface>
+
