@@ -1,0 +1,56 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+  <description>
+
+  MPI - The Message Passing Interface for
+  computational clusters. Includes the MPD version
+  with its fast job launcher.
+
+  </description>
+
+  <changelog>
+  $Log: sol_mpi.xml,v $
+  Revision 1.1  2008/05/21 17:46:55  anoop
+  Merginig code from mercurial.
+  This change makes the HPC roll more solaris friendly
+
+
+  </changelog>
+	<package>SUNWompi</package>
+	<package>SUNWompiat</package>
+	<package>SUNWompimn</package>
+	<package>SUNWomsc</package>
+	<package>ROCKSmpi-tests</package>
+
+<post>
+<!--
+Create a response script for SUNWompiat.
+It's something necessary or else SUNWompiat 
+will fail(aaaargh! Why is packaging on Solaris this braindead?)
+  -->
+<eval>
+<![CDATA[
+cat > /export/home/install/jumpstart/media/Solaris_10/Product/SUNWompiat.response << __eof__
+INSTALLED_BY_NFSSVR="no"
+__eof__
+]]>
+</eval>
+crle -u -l /opt/SUNWhpc/HPC7.0/lib/
+crle -u -l /opt/SUNWhpc/HPC7.0/lib/openmpi
+crle -64 -u -l /opt/SUNWhpc/HPC7.0/lib/amd64
+crle -64 -u -l /opt/SUNWhpc/HPC7.0/lib/amd64/openmpi
+
+<file name="/etc/man.config" mode="append">
+MANPATH /opt/SUNWhpc/HPC7.0/man
+</file>
+<file name="/.profile" mode="append">
+PATH=$PATH:/opt/SUNWhpc/HPC7.0/bin/
+export PATH
+</file>
+
+</post>
+
+</kickstart> 
+

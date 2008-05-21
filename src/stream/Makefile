@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.9 2008/03/06 23:41:54 mjk Exp $
+# $Id: Makefile,v 1.10 2008/05/21 17:46:56 anoop Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.10  2008/05/21 17:46:56  anoop
+# Merginig code from mercurial.
+# This change makes the HPC roll more solaris friendly
+#
 # Revision 1.9  2008/03/06 23:41:54  mjk
 # copyright storm on
 #
@@ -70,9 +74,7 @@ REDHAT.ROOT     = $(CURDIR)/../../
 ROCKSROOT       = ../../../../..
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
-
-
-CFLAGS = -O3 -funroll-loops
+-include $(OS).mk
 
 build: stream
 
@@ -83,11 +85,12 @@ stream: stream_d.o second_wall.o
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/bin
 	cp stream $(ROOT)/$(PKGROOT)/bin
-
 	mkdir -p $(ROOT)/$(PKGROOT)/docs
 	cp FILES README $(ROOT)/$(PKGROOT)/docs
 
 
 clean::
+	rm -f *.o
+	rm -f stream
 	rm -f $(NAME).spec.in
 

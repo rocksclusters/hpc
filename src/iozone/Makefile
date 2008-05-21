@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.13 2008/03/06 23:41:53 mjk Exp $
+# $Id: Makefile,v 1.14 2008/05/21 17:46:55 anoop Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.14  2008/05/21 17:46:55  anoop
+# Merginig code from mercurial.
+# This change makes the HPC roll more solaris friendly
+#
 # Revision 1.13  2008/03/06 23:41:53  mjk
 # copyright storm on
 #
@@ -74,7 +78,7 @@
 #
 
 PKGROOT		= /opt/iozone
-REDHAT.ROOT     = $(PWD)/../../
+REDHAT.ROOT     = $(CURDIR)/../../
 ROCKSROOT       = ../../../../..
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
@@ -85,10 +89,10 @@ DOCS		= IOzone_msword_98.pdf Run_rules.doc IOzone_msword_98.doc \
 
 
 build:
-	tar xvf $(NAME)$(IOZONE_VERSION).tar
+	$(TAR) xf $(NAME)$(IOZONE_VERSION).tar
 	(								\
 		cd $(NAME)$(IOZONE_VERSION)/src/current;		\
-		make $(TARGET);						\
+		$(MAKE) $(TARGET);						\
 	)
 	
 

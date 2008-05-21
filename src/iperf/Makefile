@@ -1,5 +1,5 @@
 # --------------------------------------------------- -*- Makefile -*- --
-# $Id: Makefile,v 1.10 2008/03/06 23:41:53 mjk Exp $
+# $Id: Makefile,v 1.11 2008/05/21 17:46:55 anoop Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.11  2008/05/21 17:46:55  anoop
+# Merginig code from mercurial.
+# This change makes the HPC roll more solaris friendly
+#
 # Revision 1.10  2008/03/06 23:41:53  mjk
 # copyright storm on
 #
@@ -93,7 +97,7 @@
 #
 #
 
-REDHAT.ROOT     = $(PWD)/../../
+REDHAT.ROOT     = $(CURDIR)/../../
 ROCKSROOT       = ../../../../..
 
 -include $(ROCKSROOT)/etc/Rules.mk
@@ -101,11 +105,12 @@ include Rules.mk
 
 
 build:
-	tar zvfx iperf-$(VERSION).tar.gz
-	(							\
-		cd iperf-$(VERSION) ;				\
-		./configure --prefix=$(PKGROOT) ;		\
-		$(MAKE) ;					\
+	gunzip -c iperf-$(VERSION).tar.gz | $(TAR) -xf -
+	-(cd patch-files; find . -type f | grep -v CVS | cpio -pudv ../)
+	(					\
+		cd iperf-$(VERSION) ;		\
+		./configure --prefix=$(PKGROOT);\
+		$(MAKE) ;			\
 	)
 
 

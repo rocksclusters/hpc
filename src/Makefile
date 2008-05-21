@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.16 2008/03/06 23:41:53 mjk Exp $
+# $Id: Makefile,v 1.17 2008/05/21 17:46:55 anoop Exp $
 #
 # @Copyright@
 # 
@@ -54,6 +54,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.17  2008/05/21 17:46:55  anoop
+# Merginig code from mercurial.
+# This change makes the HPC roll more solaris friendly
+#
 # Revision 1.16  2008/03/06 23:41:53  mjk
 # copyright storm on
 #
@@ -125,10 +129,7 @@
 # *** empty log message ***
 #
 
-SRCDIRS = `find . -type d \
-	! -name CVS \
-	! -name .   \
-	-prune`
+-include $(shell ../../../../bin/os).mk
 
 default:	rpm
 

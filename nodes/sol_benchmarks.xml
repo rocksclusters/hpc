@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+
+<jumpstart>
+
+<description>
+Benchmark applications
+</description>
+
+
+<changelog>
+$Log: sol_benchmarks.xml,v $
+Revision 1.1  2008/05/21 17:46:55  anoop
+Merginig code from mercurial.
+This change makes the HPC roll more solaris friendly
+
+
+</changelog>
+
+
+<!-- STREAM - memory bandwidth benchmark -->
+<package>ROCKSstream</package>
+
+<!-- iperf - network performance tester -->
+<package>ROCKSiperf</package>
+
+<!-- iozone - file system benchmark -->
+<package>ROCKSiozone</package>
+
+</jumpstart> 

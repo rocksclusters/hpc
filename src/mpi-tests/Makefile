@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1 2008/04/07 23:01:59 bruno Exp $
+# $Id: Makefile,v 1.2 2008/05/21 17:46:55 anoop Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.2  2008/05/21 17:46:55  anoop
+# Merginig code from mercurial.
+# This change makes the HPC roll more solaris friendly
+#
 # Revision 1.1  2008/04/07 23:01:59  bruno
 # add some simple MPI tests to help the user test out their cluster
 #
@@ -67,8 +71,8 @@ include Rules.mk
 
 
 build:
-	/opt/openmpi/bin/mpicc -o mpi-verify mpi-verify.c -lm
-	/opt/openmpi/bin/mpicc -o mpi-ring mpi-ring.c -lm
+	$(MPICC) -o mpi-verify mpi-verify.c -lm
+	$(MPICC) -o mpi-ring mpi-ring.c -lm
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/bin
