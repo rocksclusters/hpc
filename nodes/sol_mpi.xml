@@ -12,6 +12,11 @@
 
   <changelog>
   $Log: sol_mpi.xml,v $
+  Revision 1.2  2008/07/10 17:17:14  anoop
+  Fixes to include Sun cluster tools in the roll.
+  The tools themselves are not in CVS, till I get
+  permission from Sun about their re-distributability
+
   Revision 1.1  2008/05/21 17:46:55  anoop
   Merginig code from mercurial.
   This change makes the HPC roll more solaris friendly
@@ -19,34 +24,21 @@
 
   </changelog>
 	<package>SUNWompi</package>
-	<package>SUNWompiat</package>
 	<package>SUNWompimn</package>
 	<package>SUNWomsc</package>
 	<package>ROCKSmpi-tests</package>
 
 <post>
-<!--
-Create a response script for SUNWompiat.
-It's something necessary or else SUNWompiat 
-will fail(aaaargh! Why is packaging on Solaris this braindead?)
-  -->
-<eval>
-<![CDATA[
-cat > /export/home/install/jumpstart/media/Solaris_10/Product/SUNWompiat.response << __eof__
-INSTALLED_BY_NFSSVR="no"
-__eof__
-]]>
-</eval>
-crle -u -l /opt/SUNWhpc/HPC7.0/lib/
-crle -u -l /opt/SUNWhpc/HPC7.0/lib/openmpi
-crle -64 -u -l /opt/SUNWhpc/HPC7.0/lib/amd64
-crle -64 -u -l /opt/SUNWhpc/HPC7.0/lib/amd64/openmpi
+crle -u -l /opt/SUNWhpc/HPC7.1/lib/
+crle -u -l /opt/SUNWhpc/HPC7.1/lib/openmpi
+crle -64 -u -l /opt/SUNWhpc/HPC7.1/lib/amd64
+crle -64 -u -l /opt/SUNWhpc/HPC7.1/lib/amd64/openmpi
 
 <file name="/etc/man.config" mode="append">
-MANPATH /opt/SUNWhpc/HPC7.0/man
+MANPATH /opt/SUNWhpc/HPC7.1/man
 </file>
 <file name="/.profile" mode="append">
-PATH=$PATH:/opt/SUNWhpc/HPC7.0/bin/
+PATH=$PATH:/opt/SUNWhpc/HPC7.1/bin/
 export PATH
 </file>
 
