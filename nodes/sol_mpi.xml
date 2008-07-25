@@ -12,6 +12,9 @@
 
   <changelog>
   $Log: sol_mpi.xml,v $
+  Revision 1.3  2008/07/25 00:47:48  anoop
+  Use profile.d scripts
+
   Revision 1.2  2008/07/10 17:17:14  anoop
   Fixes to include Sun cluster tools in the roll.
   The tools themselves are not in CVS, till I get
@@ -37,7 +40,7 @@ crle -64 -u -l /opt/SUNWhpc/HPC7.1/lib/amd64/openmpi
 <file name="/etc/man.config" mode="append">
 MANPATH /opt/SUNWhpc/HPC7.1/man
 </file>
-<file name="/.profile" mode="append">
+<file name="/etc/profile.d/mpi.sh">
 PATH=$PATH:/opt/SUNWhpc/HPC7.1/bin/
 export PATH
 </file>
