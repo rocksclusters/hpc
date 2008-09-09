@@ -1,3 +1,3 @@
 NAME		= rocks-openmpi
-VERSION		= 1.2.6
+VERSION		= 1.2.7
 RELEASE		= 1
