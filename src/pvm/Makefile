@@ -1,5 +1,5 @@
 # --------------------------------------------------- -*- Makefile -*- --
-# $Id: Makefile,v 1.5 2008/03/06 23:41:54 mjk Exp $
+# $Id: Makefile,v 1.6 2008/10/15 20:13:04 mjk Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.6  2008/10/15 20:13:04  mjk
+# - more changes to build outside of the tree
+# - removed some old fds-only targets
+#
 # Revision 1.5  2008/03/06 23:41:54  mjk
 # copyright storm on
 #
@@ -74,7 +78,6 @@ ROCKS-EXAMPLES = pvm3-examples.tar Readme.rocks
 PKGROOT	= /usr/share/pvm3
 
 REDHAT.ROOT = $(PWD)/../../
-ROCKSROOT = ../../../../..
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 -include $(ROCKSROOT)/etc/python.mk

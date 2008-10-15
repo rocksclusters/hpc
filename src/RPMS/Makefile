@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.9 2008/03/06 23:41:53 mjk Exp $
+# $Id: Makefile,v 1.10 2008/10/15 20:13:04 mjk Exp $
 #
 # @Copyright@
 # 
@@ -54,6 +54,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.10  2008/10/15 20:13:04  mjk
+# - more changes to build outside of the tree
+# - removed some old fds-only targets
+#
 # Revision 1.9  2008/03/06 23:41:53  mjk
 # copyright storm on
 #
@@ -86,7 +90,6 @@
 #
 
 REDHAT.ROOT	= $(PWD)/../../
-ROCKSROOT	= ../../../../..
 MAKE.iscontrib	= 1
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk

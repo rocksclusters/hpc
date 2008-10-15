@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.10 2008/05/21 17:46:56 anoop Exp $
+# $Id: Makefile,v 1.11 2008/10/15 20:13:05 mjk Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.11  2008/10/15 20:13:05  mjk
+# - more changes to build outside of the tree
+# - removed some old fds-only targets
+#
 # Revision 1.10  2008/05/21 17:46:56  anoop
 # Merginig code from mercurial.
 # This change makes the HPC roll more solaris friendly
@@ -71,7 +75,6 @@
 #
 
 REDHAT.ROOT     = $(CURDIR)/../../
-ROCKSROOT       = ../../../../..
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 -include $(OS).mk

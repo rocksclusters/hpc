@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.7 2008/04/07 23:03:02 bruno Exp $
+# $Id: Makefile,v 1.8 2008/10/15 20:13:04 mjk Exp $
 #
 # @Copyright@
 # 
@@ -51,6 +51,10 @@
 #
 #
 # $Log: Makefile,v $
+# Revision 1.8  2008/10/15 20:13:04  mjk
+# - more changes to build outside of the tree
+# - removed some old fds-only targets
+#
 # Revision 1.7  2008/04/07 23:03:02  bruno
 # add openmpi back into HPC roll. the bio roll will use thie mpi environment
 # to for a couple of its apps.
@@ -59,7 +63,6 @@
 
 PKGROOT = /opt/openmpi
 REDHAT.ROOT = $(PWD)/../../
-ROCKSROOT = ../../../../..
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk

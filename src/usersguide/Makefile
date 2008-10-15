@@ -1,5 +1,5 @@
 # 
-# $Id: Makefile,v 1.20 2008/04/14 22:31:08 bruno Exp $
+# $Id: Makefile,v 1.21 2008/10/15 20:13:05 mjk Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.21  2008/10/15 20:13:05  mjk
+# - more changes to build outside of the tree
+# - removed some old fds-only targets
+#
 # Revision 1.20  2008/04/14 22:31:08  bruno
 # new HPC roll user's guide
 #
@@ -108,7 +112,6 @@
 
 PKGROOT         = /var/www/html/roll-documentation/hpc/$(VERSION)
 REDHAT.ROOT     = $(PWD)/../../
-ROCKSROOT       = ../../../../..
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 

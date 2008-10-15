@@ -1,3 +1,4 @@
+ROLLNAME	= hpc
 RELEASE		= 0
 COLOR		= green
 

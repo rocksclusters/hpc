@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.9 2008/03/06 23:41:54 mjk Exp $
+# $Id: Makefile,v 1.10 2008/10/15 20:13:04 mjk Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.10  2008/10/15 20:13:04  mjk
+# - more changes to build outside of the tree
+# - removed some old fds-only targets
+#
 # Revision 1.9  2008/03/06 23:41:54  mjk
 # copyright storm on
 #
@@ -92,14 +96,10 @@
 
 GUIDENAME = rocks-documentation/reference-guide/$(VERSION)
 PKGROOT = /var/www/html/$(GUIDENAME)
-ROOT =
-TESTUSER = $(USER)
 OUTPUT = /var/www/html/test/$(GUIDENAME)
-TESTOUTPUT = /home/$(TESTUSER)/public_html/$(GUIDENAME)
 
 REDHAT.ROOT = $(PWD)/../../
 DOCROOT = ../../../../../doc/etc
-ROCKSROOT = ../../../../..
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
@@ -115,30 +115,10 @@ html:	index.sgml
 index.sgml: index.sgml.in
 	$(SED) $(SEDSPEC) $^ > $@
 
-testinstall: pretar
-	mkdir -p $(TESTOUTPUT)
-	$(MAKE) ROOT=$(TESTOUTPUT) PKGROOT= install
-
-# A proof is for running as a user.
-proof: testinstall index.sgml
-	jw --backend html --dsl $(PWD)/rocks.dsl#html \
-		--output $(TESTOUTPUT) index.sgml
-
-# Use test target if you are root.
-test: testinstall index.sgml
-	jw --backend html --dsl $(PWD)/rocks.dsl#html \
-		--output $(OUTPUT) index.sgml
-	install -ma+r rocks.css $(OUTPUT)
-
 pdf: index.sgml
 	jw --backend pdf --dsl $(PWD)/rocks.dsl#print index.sgml || true
-ifdef ROOT
 	install -ma+r index.pdf \
 		$(ROOT)/$(PKGROOT)/rocks-referenceguide-$(VERSION).pdf
-else
-	mv index.pdf rocks-referenceguide-$(VERSION).pdf
-endif
-
 build:
 
 pretar::
