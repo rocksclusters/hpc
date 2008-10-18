@@ -1,14 +1,14 @@
 #
-# $Id: Makefile,v 1.8 2008/10/15 20:13:04 mjk Exp $
+# $Id: Makefile,v 1.9 2008/10/18 00:56:10 mjk Exp $
 #
 # @Copyright@
 # 
-# 				Rocks
+# 				Rocks(r)
 # 		         www.rocksclusters.org
-# 		        version 4.2.1 (Cydonia)
+# 		           version 5.1  (VI)
 # 
-# Copyright (c) 2006 The Regents of the University of California. All
-# rights reserved.
+# Copyright (c) 2000 - 2008 The Regents of the University of California.
+# All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -25,15 +25,20 @@
 # 3. All advertising and press materials, printed or electronic, mentioning
 # features or use of this software must display the following acknowledgement: 
 # 
-# 	"This product includes software developed by the Rocks 
+# 	"This product includes software developed by the Rocks(r)
 # 	Cluster Group at the San Diego Supercomputer Center at the
 # 	University of California, San Diego and its contributors."
 # 
-# 4. Neither the name or logo of this software nor the names of its
+# 4. Except as permitted for the purposes of acknowledgment in paragraph 3,
+# neither the name or logo of this software nor the names of its
 # authors may be used to endorse or promote products derived from this
 # software without specific prior written permission.  The name of the
 # software includes the following terms, and any derivatives thereof:
-# "Rocks", "Rocks Clusters", and "Avalanche Installer".
+# "Rocks", "Rocks Clusters", and "Avalanche Installer".  For licensing of 
+# the associated name, interested parties should contact Technology 
+# Transfer & Intellectual Property Services, University of California, 
+# San Diego, 9500 Gilman Drive, Mail Code 0910, La Jolla, CA 92093-0910, 
+# Ph: (858) 534-5815, FAX: (858) 534-7345, E-MAIL:invent@ucsd.edu
 # 
 # THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS''
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -51,6 +56,9 @@
 #
 #
 # $Log: Makefile,v $
+# Revision 1.9  2008/10/18 00:56:10  mjk
+# copyright 5.1
+#
 # Revision 1.8  2008/10/15 20:13:04  mjk
 # - more changes to build outside of the tree
 # - removed some old fds-only targets
