@@ -9,6 +9,11 @@ Benchmark applications
 
 <changelog>
 $Log: benchmarks.xml,v $
+Revision 1.11  2008/11/30 18:59:50  anoop
+Cleanup of graph and node files
+Moved sun cluster tools from surya to aurora - need
+to find a permanent home
+
 Revision 1.10  2008/04/07 23:05:34  bruno
 nuke atlas and hpl
 
@@ -56,16 +61,16 @@ put all benchmarks into one .xml file
 
 </changelog>
 
-
 <!-- STREAM - memory bandwidth benchmark -->
-<package>stream</package>
+<package os="linux">stream</package>
+<package os="sunos">ROCKSstream</package>
 
 <!-- iperf - network performance tester -->
-<package>iperf</package>
+<package os="linux">iperf</package>
+<package os="sunos">ROCKSiperf</package>
 
 <!-- iozone - file system benchmark -->
-<package>iozone</package>
-
+<package os="linux">iozone</package>
+<package os="sunos">ROCKSiozone</package>
 
 </kickstart> 
-

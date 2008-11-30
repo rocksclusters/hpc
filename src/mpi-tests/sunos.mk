@@ -1,1 +1,1 @@
-MPICC = /opt/SUNWhpc/HPC7.1/bin/mpicc
+MPICC = /opt/SUNWhpc/HPC8.0/bin/mpicc

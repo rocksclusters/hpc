@@ -12,6 +12,11 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.38  2008/11/30 18:59:50  anoop
+  Cleanup of graph and node files
+  Moved sun cluster tools from surya to aurora - need
+  to find a permanent home
+
   Revision 1.37  2008/04/07 23:06:39  bruno
   add the rocks version of openmpi and add some basic MPI tests
 
@@ -145,17 +150,23 @@
 
   </changelog>
 
-  <package>mpich-ethernet-gnu</package>
-  <package>mpich2-ethernet-gnu</package>
+<package os="linux">mpich-ethernet-gnu</package>
+<package os="linux">mpich2-ethernet-gnu</package>
 
-  <package>rocks-openmpi</package>
-  <package>openmpi</package>
-  <package>openmpi-libs</package>
-  <package>openmpi-devel</package>
+<package os="linux">rocks-openmpi</package>
+<package os="linux">openmpi</package>
+<package os="linux">openmpi-libs</package>
+<package os="linux">openmpi-devel</package>
 
-  <package>mpi-tests</package>
+<package os="linux">mpi-tests</package>
 
-<post>
+<package os="sunos">SUNWompi</package>
+<package os="sunos">SUNWompimn</package>
+<package os="sunos">SUNWomsc</package>
+<package os="sunos">ROCKSmpi-tests</package>
+
+
+<post os="linux">
 
 <file name="/etc/man.config" mode="append">
 MANPATH /opt/mpich/gnu/man
@@ -170,10 +181,6 @@ do
 	mv /tmp/mpirun.args $f
 done
 
-</post>
-
-<post>
-
 <!--
 	make sure cleanipcs is not executable. if it is, then it is called at
 	then end of every MPI job. the problem is, it cleans up all shared
@@ -184,10 +191,6 @@ done
 
 chmod a-x /opt/mpich/gnu/sbin/cleanipcs
 
-</post>
-
-
-<post>
 <!-- Post section for openmpi -->
 <file name="/etc/ld.so.conf.d/openmpi.conf" perms="0644">
 /opt/openmpi/lib/
@@ -206,6 +209,32 @@ else
 endif
 </file>
 /sbin/ldconfig
+</post>
+
+<post os="sunos">
+crle -u -l /opt/SUNWhpc/HPC7.1/lib/
+crle -u -l /opt/SUNWhpc/HPC7.1/lib/openmpi
+crle -64 -u -l /opt/SUNWhpc/HPC7.1/lib/amd64
+crle -64 -u -l /opt/SUNWhpc/HPC7.1/lib/amd64/openmpi
+
+<file name="/etc/man.config" mode="append">
+MANPATH /opt/SUNWhpc/HPC7.1/man
+</file>
+<file name="/etc/profile.d/mpi.sh">
+PATH=$PATH:/opt/SUNWhpc/HPC7.1/bin/
+export PATH
+</file>
+<file name="/etc/profile.d/mpi.csh">
+if ( ${?path} ) then
+	set path=( $path /opt/SUNWhpc/HPC7.1/bin/ )
+else 
+	set path=( /opt/SUNWhpc/HPC7.1/bin )
+endif
+</file>
+<!--	Symlink /opt/SUNWhpc/HPC7.1 to /opt/openmpi
+	so that we can make MPI run correctly in a
+	heterogeneous environment -->
+ln -s /opt/SUNWhpc/HPC7.1 /opt/openmpi
 </post>
 
 </kickstart> 

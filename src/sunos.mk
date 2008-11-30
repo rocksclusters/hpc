@@ -4,7 +4,7 @@ pkg::
 	if [ -d sun-ct ]; then	\
 		(cd sun-ct; hg pull; hg update); \
 	else \
-		hg clone ssh://hg@surya.rocksclusters.org/sun-utils/sun-ct;\
+		hg clone ssh://hg@aurora.rocksclusters.org/sun-utils/sun-ct;\
 	fi
 
 .PHONY: sun-ct
