@@ -12,6 +12,9 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.39  2008/12/16 18:43:34  anoop
+  Upgraded Sun cluster tools to 8.1
+
   Revision 1.38  2008/11/30 18:59:50  anoop
   Cleanup of graph and node files
   Moved sun cluster tools from surya to aurora - need
@@ -212,30 +215,29 @@ endif
 </post>
 
 <post os="sunos">
-crle -u -l /opt/SUNWhpc/HPC7.1/lib/
-crle -u -l /opt/SUNWhpc/HPC7.1/lib/openmpi
-crle -64 -u -l /opt/SUNWhpc/HPC7.1/lib/amd64
-crle -64 -u -l /opt/SUNWhpc/HPC7.1/lib/amd64/openmpi
+crle -u -l /opt/SUNWhpc/HPC8.1/sun/lib/
+crle -u -l /opt/SUNWhpc/HPC8.1/sun/lib/openmpi
+crle -64 -u -l /opt/SUNWhpc/HPC8.1/sun/lib/amd64
+crle -64 -u -l /opt/SUNWhpc/HPC8.1/sun/lib/amd64/openmpi
 
 <file name="/etc/man.config" mode="append">
-MANPATH /opt/SUNWhpc/HPC7.1/man
+MANPATH /opt/SUNWhpc/HPC8.1/sun/man
 </file>
 <file name="/etc/profile.d/mpi.sh">
-PATH=$PATH:/opt/SUNWhpc/HPC7.1/bin/
+PATH=$PATH:/opt/SUNWhpc/HPC8.1/sun/bin/
 export PATH
 </file>
 <file name="/etc/profile.d/mpi.csh">
 if ( ${?path} ) then
-	set path=( $path /opt/SUNWhpc/HPC7.1/bin/ )
+	set path=( $path /opt/SUNWhpc/HPC8.1/sun/bin/ )
 else 
-	set path=( /opt/SUNWhpc/HPC7.1/bin )
+	set path=( /opt/SUNWhpc/HPC8.1/sun/bin )
 endif
 </file>
-<!--	Symlink /opt/SUNWhpc/HPC7.1 to /opt/openmpi
+<!--	Symlink /opt/SUNWhpc/HPC8.1 to /opt/openmpi
 	so that we can make MPI run correctly in a
 	heterogeneous environment -->
-ln -s /opt/SUNWhpc/HPC7.1 /opt/openmpi
+ln -s /opt/SUNWhpc/HPC8.1/sun /opt/openmpi
 </post>
 
 </kickstart> 
-
