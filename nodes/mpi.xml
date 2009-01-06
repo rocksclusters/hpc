@@ -12,6 +12,9 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.40  2009/01/06 18:06:17  bruno
+  nuked mpich
+
   Revision 1.39  2008/12/16 18:43:34  anoop
   Upgraded Sun cluster tools to 8.1
 
@@ -153,7 +156,6 @@
 
   </changelog>
 
-<package os="linux">mpich-ethernet-gnu</package>
 <package os="linux">mpich2-ethernet-gnu</package>
 
 <package os="linux">rocks-openmpi</package>
@@ -172,27 +174,8 @@
 <post os="linux">
 
 <file name="/etc/man.config" mode="append">
-MANPATH /opt/mpich/gnu/man
+MANPATH /opt/mpich2/gnu/man
 </file>
-
-<!-- Fix mpirun.args to stop Tron Saue's bug from Feb-2004 -->
-files=`find /opt/mpich -name "mpirun.args"`
-for f in $files
-do
-	sed -e 's|MPI_HOST=`hostname`|FQDN=`hostname` \
-	MPI_HOST=`expr $FQDN : "\\([^\\.]*\\).*"`|' $f &gt; /tmp/mpirun.args
-	mv /tmp/mpirun.args $f
-done
-
-<!--
-	make sure cleanipcs is not executable. if it is, then it is called at
-	then end of every MPI job. the problem is, it cleans up all shared
-	memory segments for a user and when the same user has multiple jobs
-	concurrently scheduled to the same machine, then errors occur when
-	shared memory segments are removed from running processes.
--->
-
-chmod a-x /opt/mpich/gnu/sbin/cleanipcs
 
 <!-- Post section for openmpi -->
 <file name="/etc/ld.so.conf.d/openmpi.conf" perms="0644">
