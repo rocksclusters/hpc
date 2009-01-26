@@ -1,3 +1,13 @@
+# $Id: mpi-verify.c,v 1.2 2009/01/26 22:26:50 mjk Exp $
+#
+# @Copyright@
+# @Copyright@
+#
+# $Log: mpi-verify.c,v $
+# Revision 1.2  2009/01/26 22:26:50  mjk
+# added missing copyright
+#
+
 #include <stdio.h>
 #include "mpi.h"
 
