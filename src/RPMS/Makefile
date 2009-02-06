@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.11 2008/10/18 00:56:09 mjk Exp $
+# $Id: Makefile,v 1.12 2009/02/06 00:32:07 anoop Exp $
 #
 # @Copyright@
 # 
@@ -54,6 +54,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.12  2009/02/06 00:32:07  anoop
+# Create RPM/ARCH dirs if they don't exist.
+#
 # Revision 1.11  2008/10/18 00:56:09  mjk
 # copyright 5.1
 #
@@ -92,7 +95,7 @@
 #
 #
 
-REDHAT.ROOT	= $(PWD)/../../
+REDHAT.ROOT	= $(CURDIR)/../../
 MAKE.iscontrib	= 1
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
@@ -100,6 +103,9 @@ include Rules.mk
 ARCH += "noarch"
 
 rpm::
+	for i in $(ARCH); do \
+		( mkdir -p $(REDHAT.RPMS)/$$i); \
+	done
 	@if ls *rpm; then \
 		for r in *rpm; do \
 			arch=`rpm -qp --queryformat '%{ARCH}' $$r`; \
