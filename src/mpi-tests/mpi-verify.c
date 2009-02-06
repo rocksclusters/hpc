@@ -1,12 +1,18 @@
-# $Id: mpi-verify.c,v 1.2 2009/01/26 22:26:50 mjk Exp $
+/*
+# $Id: mpi-verify.c,v 1.3 2009/02/06 00:28:05 anoop Exp $
 #
 # @Copyright@
 # @Copyright@
 #
 # $Log: mpi-verify.c,v $
+# Revision 1.3  2009/02/06 00:28:05  anoop
+# Comments in C files use /* */
+# and not #, just sayin'.
+#
 # Revision 1.2  2009/01/26 22:26:50  mjk
 # added missing copyright
 #
+*/
 
 #include <stdio.h>
 #include "mpi.h"
