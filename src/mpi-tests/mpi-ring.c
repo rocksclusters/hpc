@@ -1,13 +1,16 @@
 /*
-# $Id: mpi-ring.c,v 1.3 2009/02/06 00:28:05 anoop Exp $
+# $Id: mpi-ring.c,v 1.4 2009/02/06 00:30:54 anoop Exp $
 #
 # @Copyright@
 # @Copyright@
 #
 # $Log: mpi-ring.c,v $
+# Revision 1.4  2009/02/06 00:30:54  anoop
+# Oh god!! I'm a dumbass. Even the presence of
+# comment chars inside a comment can terminate
+# the comment. Aaaarrrgh!!!
+#
 # Revision 1.3  2009/02/06 00:28:05  anoop
-# Comments in C files use /* */
-# and not #, just sayin'.
 #
 # Revision 1.2  2009/01/26 22:26:50  mjk
 # added missing copyright
