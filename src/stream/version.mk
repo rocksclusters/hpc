@@ -1,5 +1,5 @@
 NAME	= stream
-VERSION	= 4.0
+VERSION	= 5.9
 RELEASE	= 1
 
 PKGROOT	= /opt/stream

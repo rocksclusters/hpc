@@ -1,2 +1,4 @@
 stream:
 CFLAGS = -O3
+FFLAGS = -03
+MEMSIZE=10000000

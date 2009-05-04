@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.13 2009/05/01 19:07:18 mjk Exp $
+# $Id: Makefile,v 1.14 2009/05/04 17:56:00 phil Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.14  2009/05/04 17:56:00  phil
+# Update to streams 5.9. Supports OpenMP Threads
+#
 # Revision 1.13  2009/05/01 19:07:18  mjk
 # chimi con queso
 #
@@ -80,26 +83,38 @@
 #
 #
 
+
 REDHAT.ROOT     = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 -include $(OS).mk
 
-build: stream
+SUPPORTFILES = READ.ME HISTORY.txt LICENSE.txt ROCKS.txt
+CODEFILES = stream.c stream.f mysecond.c Makefile linux.mk sunos.mk version.mk
 
-stream: stream_d.o second_wall.o
-	$(CC) $(CFLAGS) -o$@ $^ -lm
+build: stream stream_f
+
+stream: stream.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+stream.o: stream.c
+	$(CC) $(CFLAGS) -c -DN=$(MEMSIZE) -o$@ $^
+
+stream_f: stream.f mysecond.o
+	$(CC) $(CFLAGS) -c mysecond.c
+	$(FORTRAN) $(FFLAGS) -c stream.f -o stream_f.o
+	$(FORTRAN) stream_f.o mysecond.o -o stream_f
 
 	
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/bin
-	cp stream $(ROOT)/$(PKGROOT)/bin
+	$(INSTALL) -m555 stream stream_f $(ROOT)/$(PKGROOT)/bin
 	mkdir -p $(ROOT)/$(PKGROOT)/docs
-	cp FILES README $(ROOT)/$(PKGROOT)/docs
+	$(INSTALL) -m644 $(SUPPORTFILES) $(CODEFILES) $(ROOT)/$(PKGROOT)/docs
 
 
 clean::
-	rm -f *.o
-	rm -f stream
-	rm -f $(NAME).spec.in
+	$(RM) -f *.o
+	$(RM) -f stream stream_f
+	$(RM) -f $(NAME).spec.in
 
