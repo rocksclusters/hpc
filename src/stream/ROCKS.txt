@@ -1,0 +1,23 @@
+$Id: ROCKS.txt,v 1.1 2009/05/04 17:59:31 phil Exp $
+This is the Rocks-compiled version of streams. 
+
+The
+doc directory contains the files used to create streams and the specific
+compiler parameters. Openmp threading is on  by default for the C version, 
+off for the fortran version 
+
+To recompile streams (Tested only on a Rocks Frontend) :
+	1. edit <os>.mk  <os=linux,sunos) 
+	   Changes compiler options. You can 
+	   also change the size of the memory used by streams with MEMSIZE 
+	   parameter. MEMSIZE only affects the C version.
+
+	2. make clean; make build
+           This creates the stream and stream_f binaries
+
+To adjust number of threads for C version compiled with -fopenmp eg(to set to four)
+
+$ export OMP_NUM_THREADS=4
+$ /opt/stream/bin/stream
+
+       
