@@ -1,8 +1,21 @@
-$Id: ROCKS.txt,v 1.1 2009/05/04 17:59:31 phil Exp $
+$Id: ROCKS.txt,v 1.2 2009/05/04 20:47:38 phil Exp $
 This is the Rocks-compiled version of streams. 
+Streams is from the University of Virginia. See Reference section below  
 
-The
-doc directory contains the files used to create streams and the specific
+I. Running
+$ /opt/stream/bin/stream
+
+By default this will allocate a thread for each CPU (core it detects
+in the system).  You can can adjust this for the C
+version. It has been compiled with -fopenmp, to run explicitly four
+threads 
+
+$ export OMP_NUM_THREADS=4
+$ /opt/stream/bin/stream
+
+
+II. Recompiling
+The doc directory contains the files used to create streams and the specific
 compiler parameters. Openmp threading is on  by default for the C version, 
 off for the fortran version 
 
@@ -15,9 +28,10 @@ To recompile streams (Tested only on a Rocks Frontend) :
 	2. make clean; make build
            This creates the stream and stream_f binaries
 
-To adjust number of threads for C version compiled with -fopenmp eg(to set to four)
+III. Reference
 
-$ export OMP_NUM_THREADS=4
-$ /opt/stream/bin/stream
+Website: 
+http://www.cs.virginia.edu/stream/ref.html
 
-       
+Bibliographic Citation:
+McCalpin, John D., 1995: "Memory Bandwidth and Machine Balance in Current High Performance Computers", IEEE Computer Society Technical Committee on Computer Architecture (TCCA) Newsletter, December 1995.
