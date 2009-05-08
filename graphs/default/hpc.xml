@@ -10,6 +10,9 @@ The HPC Roll
 
 <changelog>
 $Log: hpc.xml,v $
+Revision 1.45  2009/05/08 22:21:35  anoop
+Removed hpc-db from the mix
+
 Revision 1.44  2008/03/03 20:01:52  bruno
 hpc graph cleanup
 
@@ -162,13 +165,6 @@ initial release
 
 </changelog>
 
-<!-- Graph Ordering for Kickstart Generation -->
-
-<order head="database-security">
-	<tail>hpc-db</tail>
-</order>
-
-
 <!-- Graph OO Framework -->
 
 <edge from="client" to="hpc-client"/>
@@ -177,7 +173,6 @@ initial release
 <edge from="hpc-server">
 	<to>frontend</to>
         <to arch="i386">pvm</to>
-        <to>hpc-db</to>
 </edge>
 
 <edge from="base" to="hpc-base"/>
@@ -186,6 +181,4 @@ initial release
         <to>mpi</to>
 </edge>
 
-
 </graph>
-
