@@ -1,4 +1,4 @@
-# $Id: rocks-referenceguide.spec.in,v 1.10 2009/05/01 19:07:18 mjk Exp $
+# $Id: rocks-referenceguide.spec.in,v 1.11 2009/05/19 21:50:12 bruno Exp $
 #
 # @Copyright@
 # 
@@ -54,6 +54,9 @@
 # @Copyright@
 #
 # $Log: rocks-referenceguide.spec.in,v $
+# Revision 1.11  2009/05/19 21:50:12  bruno
+# fix
+#
 # Revision 1.10  2009/05/01 19:07:18  mjk
 # chimi con queso
 #
@@ -93,7 +96,7 @@ Summary: Rocks Reference Guide
 Name: @NAME@
 Version: @VERSION@
 Release: @RELEASE@
-Copyright: @COPYRIGHT@
+License: @COPYRIGHT@
 Vendor: @VENDOR@
 Group: System Environment/Base
 Source: %{name}-%{version}.tar.gz
