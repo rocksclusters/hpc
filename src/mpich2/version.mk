@@ -1,5 +1,5 @@
 NAME		= mpich2-ethernet-gnu
-VERSION		= 1.0.7
+VERSION		= 1.0.8p1
 RELEASE		= 0
 
 PKGROOT		= /opt/mpich2/gnu
