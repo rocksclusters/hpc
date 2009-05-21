@@ -18,4 +18,4 @@ pkg:: $(HG_PACKAGE)
 
 pkg clean::
 PKG_EXISTS = $(shell [ -d $(dir) ] && echo $(dir))
-SRC_DIRS += $(foreach dir, $(HG_PACKAGE), $(PKG_EXISTS))
+SRCDIRS += $(foreach dir, $(HG_PACKAGE), $(PKG_EXISTS))
