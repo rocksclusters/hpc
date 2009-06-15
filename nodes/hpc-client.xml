@@ -1,4 +1,21 @@
 <?xml version="1.0" standalone="no"?>
 
 <kickstart interface="public">
+
+<post>
+
+cpus=`grep 'processor' /proc/cpuinfo | wc -l`
+maxstartups=$(echo "$cpus * 2" | bc)
+
+if [ $maxstartups -lt 10 ]
+then
+	maxstartups=10
+fi
+
+<file name="/etc/ssh/sshd_config">
+MaxStartups $maxstartups
+</file>
+
+</post>
+
 </kickstart> 
