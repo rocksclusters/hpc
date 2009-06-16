@@ -12,9 +12,8 @@ then
 	maxstartups=10
 fi
 
-<file name="/etc/ssh/sshd_config">
-MaxStartups $maxstartups
-</file>
+export maxstartups
+echo "MaxStartups $maxstartups" &gt;&gt; /etc/ssh/sshd_config
 
 </post>
 
