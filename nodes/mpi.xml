@@ -12,6 +12,9 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.41  2009/06/26 00:57:56  anoop
+  added sun-hpc cluster tools to the hpc roll
+
   Revision 1.40  2009/01/06 18:06:17  bruno
   nuked mpich
 
@@ -157,27 +160,26 @@
   </changelog>
 
 <package os="linux">mpich2-ethernet-gnu</package>
-
 <package os="linux">rocks-openmpi</package>
 <package os="linux">openmpi</package>
 <package os="linux">openmpi-libs</package>
 <package os="linux">openmpi-devel</package>
-
 <package os="linux">mpi-tests</package>
+<package os="linux">ClusterTools_gnu</package>
 
 <package os="sunos">SUNWompi</package>
 <package os="sunos">SUNWompimn</package>
 <package os="sunos">SUNWomsc</package>
 <package os="sunos">ROCKSmpi-tests</package>
 
-
 <post os="linux">
-
 <file name="/etc/man.config" mode="append">
 MANPATH /opt/mpich2/gnu/man
 </file>
+</post>
 
-<!-- Post section for openmpi -->
+<!-- OpenMPI Path and Libraries -->
+<post os="linux">
 <file name="/etc/ld.so.conf.d/openmpi.conf" perms="0644">
 /opt/openmpi/lib/
 /opt/openmpi/lib/openmpi/
@@ -194,33 +196,61 @@ else
 	set path=( /opt/openmpi/bin )
 endif
 </file>
+</post>
+
+<!-- Sun Cluster tools libraries Linux-->
+<post os="linux" arch="i386">
+<file name="/etc/ld.so.conf.d/sunct.conf" perms="0644">
+/opt/SUNWhpc/HPC8.2/gnu/lib/
+/opt/SUNWhpc/HPC8.2/gnu/lib/openmpi/
+</file>
 /sbin/ldconfig
 </post>
 
+<!-- Sun Cluster tools 64-bit libraries on Linux-->
+<post os="linux" arch="x86_64">
+<file name="/etc/ld.so.conf.d/sunct.conf" perms="0644">
+/opt/SUNWhpc/HPC8.2/gnu/lib64
+/opt/SUNWhpc/HPC8.2/gnu/lib64/openmpi/
+</file>
+/sbin/ldconfig
+</post>
+
+<!-- Sun Cluster tools paths on Linux-->
+<post os="linux">
+<file name="/etc/profile.d/sun-ct.sh" perms="0755">
+PATH=$PATH:/opt/SUNWhpc/HPC8.2/gnu/bin
+</file>
+<file name="/opt/profile.d/sun-ct.csh" perms="0755">
+if ( ${?path} ) then
+	set path=( $path /opt/SUNWhpc/HPC8.2/gnu/bin/ )
+else 
+	set path=( /opt/SUNWhpc/HPC8.2/gnu/bin/ )
+endif
+</file>
+</post>
+
+<!-- Sun HPC Cluster tools path and libraries for SunOS-->
 <post os="sunos">
-crle -u -l /opt/SUNWhpc/HPC8.1/sun/lib/
-crle -u -l /opt/SUNWhpc/HPC8.1/sun/lib/openmpi
-crle -64 -u -l /opt/SUNWhpc/HPC8.1/sun/lib/amd64
-crle -64 -u -l /opt/SUNWhpc/HPC8.1/sun/lib/amd64/openmpi
+crle -u -l /opt/SUNWhpc/HPC8.2/sun/lib/
+crle -u -l /opt/SUNWhpc/HPC8.2/sun/lib/openmpi
+crle -64 -u -l /opt/SUNWhpc/HPC8.2/sun/lib/amd64
+crle -64 -u -l /opt/SUNWhpc/HPC8.2/sun/lib/amd64/openmpi
 
 <file name="/etc/man.config" mode="append">
-MANPATH /opt/SUNWhpc/HPC8.1/sun/man
+MANPATH /opt/SUNWhpc/HPC8.2/sun/man
 </file>
 <file name="/etc/profile.d/mpi.sh">
-PATH=$PATH:/opt/SUNWhpc/HPC8.1/sun/bin/
+PATH=$PATH:/opt/SUNWhpc/HPC8.2/sun/bin/
 export PATH
 </file>
 <file name="/etc/profile.d/mpi.csh">
 if ( ${?path} ) then
-	set path=( $path /opt/SUNWhpc/HPC8.1/sun/bin/ )
+	set path=( $path /opt/SUNWhpc/HPC8.2/sun/bin/ )
 else 
-	set path=( /opt/SUNWhpc/HPC8.1/sun/bin )
+	set path=( /opt/SUNWhpc/HPC8.2/sun/bin )
 endif
 </file>
-<!--	Symlink /opt/SUNWhpc/HPC8.1 to /opt/openmpi
-	so that we can make MPI run correctly in a
-	heterogeneous environment -->
-ln -s /opt/SUNWhpc/HPC8.1/sun /opt/openmpi
 </post>
 
 </kickstart> 
