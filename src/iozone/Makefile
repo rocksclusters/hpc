@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.18 2009/10/01 21:07:56 bruno Exp $
+# $Id: Makefile,v 1.19 2009/10/07 17:10:22 bruno Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.19  2009/10/07 17:10:22  bruno
+# workaround for a bad checkin
+#
 # Revision 1.18  2009/10/01 21:07:56  bruno
 # refresh for 5.3
 #
@@ -92,6 +95,7 @@
 
 PKGROOT		= /opt/iozone
 REDHAT.ROOT     = $(CURDIR)/../../
+
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
@@ -101,6 +105,7 @@ DOCS		= IOzone_msword_98.pdf Run_rules.doc IOzone_msword_98.doc \
 
 
 build:
+	cvs update -kb $(NAME)$(IOZONE_VERSION).tar
 	$(TAR) xf $(NAME)$(IOZONE_VERSION).tar
 	(								\
 		cd $(NAME)$(IOZONE_VERSION)/src/current;		\
