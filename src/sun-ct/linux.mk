@@ -5,5 +5,6 @@ SHAREDIR=gnu/share
 install::
 	if [ ! -d $(REDHAT.ROOT)/RPMS/$(ARCH)/ ]; then \
 		mkdir -p $(REDHAT.ROOT)/RPMS/$(ARCH)/; fi
-	cp $(ARCHIVENAME)-$(VERSION)-$(RELEASE_NAME)/Product/ClusterTools_gnu-$(VERSION)-09j.$(ARCH).rpm \
-		$(REDHAT.ROOT)/RPMS/$(ARCH)/
+	find $(ARCHIVENAME)-$(VERSION)-$(RELEASE_NAME)/Product/ \
+		-type f -name ClusterTools_gnu-$(VERSION)\*.$(ARCH).rpm \
+		-exec cp -rf {} $(REDHAT.ROOT)/RPMS/$(ARCH) \;
