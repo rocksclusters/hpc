@@ -2,7 +2,7 @@
 #
 # This file should remain OS independent
 #
-# $Id: bootstrap.sh,v 1.9 2009/05/01 19:07:18 mjk Exp $
+# $Id: bootstrap.sh,v 1.10 2009/11/25 23:43:20 anoop Exp $
 #
 # @Copyright@
 # 
@@ -58,6 +58,9 @@
 # @Copyright@
 #
 # $Log: bootstrap.sh,v $
+# Revision 1.10  2009/11/25 23:43:20  anoop
+# bootstrapping the HPC roll for sunos
+#
 # Revision 1.9  2009/05/01 19:07:18  mjk
 # chimi con queso
 #
@@ -104,5 +107,10 @@
 
 . $ROLLSROOT/etc/bootstrap-functions.sh
 
-compile_and_install atlas
-compile_and_install openmpi
+if [ `./_os` == "linux" ]; then
+	compile_and_install openmpi
+fi
+
+if [ `./_os` == "sunos" ]; then
+	(cd src/sun-ct && gmake bootstrap)
+fi
