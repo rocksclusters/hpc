@@ -1,5 +1,5 @@
 # --------------------------------------------------- -*- Makefile -*- --
-# $Id: Makefile,v 1.14 2009/05/01 19:07:18 mjk Exp $
+# $Id: Makefile,v 1.15 2009/11/25 23:20:51 anoop Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.15  2009/11/25 23:20:51  anoop
+# Mods to support sunos patching for iperf
+#
 # Revision 1.14  2009/05/01 19:07:18  mjk
 # chimi con queso
 #
@@ -112,17 +115,19 @@ REDHAT.ROOT     = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
-
-build:
+prep:
 	gunzip -c iperf-$(VERSION).tar.gz | $(TAR) -xf -
-	-(cd patch-files; find . -type f | grep -v CVS | cpio -pudv ../)
+	-(cd patch-files/iperf-$(VERSION)/$(OS); \
+	  find . -type f | grep -v CVS | 	\
+	  cpio -pudv ../../../iperf-$(VERSION))
+
+
+build: prep
 	(					\
 		cd iperf-$(VERSION) ;		\
 		./configure --prefix=$(PKGROOT);\
 		$(MAKE) ;			\
 	)
-
-
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
 	(							\
@@ -133,4 +138,3 @@ install::
 
 clean::
 	rm -rf iperf-$(VERSION)
-
