@@ -12,6 +12,11 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.42  2009/11/25 23:34:24  anoop
+  Upgraded to latest Sun HPC Cluster tools for SunOS
+  Added patch for Sun HPC Cluster tools so that installation
+  won't fail
+
   Revision 1.41  2009/06/26 00:57:56  anoop
   added sun-hpc cluster tools to the hpc roll
 
@@ -168,8 +173,12 @@
 <package os="linux">ClusterTools_gnu</package>
 
 <package os="sunos">SUNWompi</package>
+<package os="sunos">SUNWompiat</package>
 <package os="sunos">SUNWompimn</package>
+<package os="sunos">SUNWompir</package>
 <package os="sunos">SUNWomsc</package>
+
+<package os="sunos">ROCKSsunct-extra</package>
 <package os="sunos">ROCKSmpi-tests</package>
 
 <post os="linux">
