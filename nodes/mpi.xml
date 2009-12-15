@@ -12,6 +12,9 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.43  2009/12/15 19:09:51  bruno
+  new
+
   Revision 1.42  2009/11/25 23:34:24  anoop
   Upgraded to latest Sun HPC Cluster tools for SunOS
   Added patch for Sun HPC Cluster tools so that installation
@@ -207,11 +210,40 @@ endif
 </file>
 </post>
 
-<!-- Sun Cluster tools libraries Linux-->
+<!-- Sun HPC Cluster tools -->
+<!-- 
+	Create common link to Sun HPC cluster
+	tools on SunOS and Linux
+-->
+<post os="linux">
+ln -s /opt/SUNWhpc/HPC8.2.1/gnu /opt/sun-ct
+</post>
+<post os="sunos">
+ln -s /opt/SUNWhpc/HPC8.2.1/sun /opt/sun-ct
+</post>
+
+<!-- Sun Cluster tools path -->
+<post>
+<file name="/etc/profile.d/sun-ct.sh" perms="0755">
+PATH=$PATH:/opt/sun-ct/bin
+</file>
+<file name="/opt/profile.d/sun-ct.csh" perms="0755">
+if ( ${?path} ) then
+	set path=( $path /opt/sun-ct/bin/ )
+else 
+	set path=( /opt/sun-ct/bin/ )
+endif
+</file>
+<file name="/etc/man.config" mode="append">
+MANPATH /opt/sun-ct/man
+</file>
+</post>
+
+<!-- Sun Cluster tools libraries on Linux-->
 <post os="linux" arch="i386">
 <file name="/etc/ld.so.conf.d/sunct.conf" perms="0644">
-/opt/SUNWhpc/HPC8.2/gnu/lib/
-/opt/SUNWhpc/HPC8.2/gnu/lib/openmpi/
+/opt/sun-ct/lib/
+/opt/sun-ct/lib/openmpi/
 </file>
 /sbin/ldconfig
 </post>
@@ -219,47 +251,18 @@ endif
 <!-- Sun Cluster tools 64-bit libraries on Linux-->
 <post os="linux" arch="x86_64">
 <file name="/etc/ld.so.conf.d/sunct.conf" perms="0644">
-/opt/SUNWhpc/HPC8.2/gnu/lib64
-/opt/SUNWhpc/HPC8.2/gnu/lib64/openmpi/
+/opt/sun-ct/lib/lib64
+/opt/sun-ct/lib/lib64/openmpi
 </file>
 /sbin/ldconfig
 </post>
 
-<!-- Sun Cluster tools paths on Linux-->
-<post os="linux">
-<file name="/etc/profile.d/sun-ct.sh" perms="0755">
-PATH=$PATH:/opt/SUNWhpc/HPC8.2/gnu/bin
-</file>
-<file name="/opt/profile.d/sun-ct.csh" perms="0755">
-if ( ${?path} ) then
-	set path=( $path /opt/SUNWhpc/HPC8.2/gnu/bin/ )
-else 
-	set path=( /opt/SUNWhpc/HPC8.2/gnu/bin/ )
-endif
-</file>
-</post>
-
-<!-- Sun HPC Cluster tools path and libraries for SunOS-->
+<!-- Sun HPC Cluster tools libraries for SunOS-->
 <post os="sunos">
-crle -u -l /opt/SUNWhpc/HPC8.2/sun/lib/
-crle -u -l /opt/SUNWhpc/HPC8.2/sun/lib/openmpi
-crle -64 -u -l /opt/SUNWhpc/HPC8.2/sun/lib/amd64
-crle -64 -u -l /opt/SUNWhpc/HPC8.2/sun/lib/amd64/openmpi
-
-<file name="/etc/man.config" mode="append">
-MANPATH /opt/SUNWhpc/HPC8.2/sun/man
-</file>
-<file name="/etc/profile.d/mpi.sh">
-PATH=$PATH:/opt/SUNWhpc/HPC8.2/sun/bin/
-export PATH
-</file>
-<file name="/etc/profile.d/mpi.csh">
-if ( ${?path} ) then
-	set path=( $path /opt/SUNWhpc/HPC8.2/sun/bin/ )
-else 
-	set path=( /opt/SUNWhpc/HPC8.2/sun/bin )
-endif
-</file>
+crle -u -l /opt/sun-ct/lib/
+crle -u -l /opt/sun-ct/lib/openmpi
+crle -64 -u -l /opt/sun-ct/lib/amd64
+crle -64 -u -l /opt/sun-ct/lib/amd64/openmpi
 </post>
 
-</kickstart> 
+</kickstart>
