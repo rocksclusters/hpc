@@ -8,3 +8,5 @@ install::
 	find $(ARCHIVENAME)-$(VERSION)-$(RELEASE_NAME)/Product/ \
 		-type f -name ClusterTools_gnu-$(VERSION)\*.$(ARCH).rpm \
 		-exec cp -rf {} $(REDHAT.ROOT)/RPMS/$(ARCH) \;
+	( find mpi-selector -type f | grep -v CVS | \
+		cpio -pudv $(ROOT)/$(PKGROOT)/$(SHAREDIR) )
