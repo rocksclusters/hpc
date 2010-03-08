@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.10 2009/05/01 19:07:18 mjk Exp $
+# $Id: Makefile,v 1.11 2010/03/08 04:36:50 anoop Exp $
 #
 # @Copyright@
 # 
@@ -56,6 +56,10 @@
 #
 #
 # $Log: Makefile,v $
+# Revision 1.11  2010/03/08 04:36:50  anoop
+# Upgraded OpenMPI to 1.4.1
+# Added mpi-selector capability
+#
 # Revision 1.10  2009/05/01 19:07:18  mjk
 # chimi con queso
 #
@@ -73,25 +77,29 @@
 #
 
 PKGROOT = /opt/openmpi
-REDHAT.ROOT = $(PWD)/../../
+REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
 
 build:
-	tar xjf openmpi-$(VERSION).tar.bz2
-	(								\
-		cd openmpi-$(VERSION) ;					\
-		./configure --prefix=$(PKGROOT) --enable-static ;	\
-		make all ;						\
+	bunzip2 -c openmpi-$(VERSION).tar.bz2 | $(TAR) -xf -
+	(					\
+		cd openmpi-$(VERSION) ;		\
+		./configure --prefix=$(PKGROOT) \
+			--with-sge=/opt/gridengine \
+			--enable-static ;	\
+		$(MAKE) all ;			\
 	)
 
 install::
-	(								\
-		cd openmpi-$(VERSION) ;					\
-		make prefix=$(ROOT)/$(PKGROOT) install ;		\
+	(					\
+		cd openmpi-$(VERSION) ;		\
+		$(MAKE) prefix=$(ROOT)/$(PKGROOT) install ;	\
 	)
+	( find mpi-selector -type f | grep -v CVS | \
+		cpio -pudv $(ROOT)/$(PKGROOT)/share/ )
 
 clean::
 	rm -rf openmpi-$(VERSION)
