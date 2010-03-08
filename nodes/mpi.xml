@@ -12,6 +12,10 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.44  2010/03/08 04:38:20  anoop
+  Removed OpenMPI and Sun-CT from path and library path from Linux.
+  Added mpi-selector capability for both
+
   Revision 1.43  2009/12/15 19:09:51  bruno
   new
 
@@ -174,6 +178,7 @@
 <package os="linux">openmpi-devel</package>
 <package os="linux">mpi-tests</package>
 <package os="linux">ClusterTools_gnu</package>
+<package os="linux">sunct-extra</package>
 
 <package os="sunos">SUNWompi</package>
 <package os="sunos">SUNWompiat</package>
@@ -185,28 +190,11 @@
 <package os="sunos">ROCKSmpi-tests</package>
 
 <post os="linux">
+<!-- Add man pages to MANPATH -->
 <file name="/etc/man.config" mode="append">
+MANPATH	/opt/openmpi/share/man
+MANPATH /opt/sun-ct/man
 MANPATH /opt/mpich2/gnu/man
-</file>
-</post>
-
-<!-- OpenMPI Path and Libraries -->
-<post os="linux">
-<file name="/etc/ld.so.conf.d/openmpi.conf" perms="0644">
-/opt/openmpi/lib/
-/opt/openmpi/lib/openmpi/
-</file>
-
-<file name="/etc/profile.d/openmpi.sh" perms="0755">
-PATH=$PATH:/opt/openmpi/bin/
-</file>
-
-<file name="/etc/profile.d/openmpi.csh" perms="0755">
-if ( ${?path} ) then
-	set path=( $path /opt/openmpi/bin/ )
-else 
-	set path=( /opt/openmpi/bin )
-endif
 </file>
 </post>
 
@@ -218,12 +206,13 @@ endif
 <post os="linux">
 ln -s /opt/SUNWhpc/HPC8.2.1/gnu /opt/sun-ct
 </post>
+
 <post os="sunos">
 ln -s /opt/SUNWhpc/HPC8.2.1/sun /opt/sun-ct
 </post>
 
+<post os="sunos">
 <!-- Sun Cluster tools path -->
-<post>
 <file name="/etc/profile.d/sun-ct.sh" perms="0755">
 PATH=$PATH:/opt/sun-ct/bin
 </file>
@@ -234,35 +223,23 @@ else
 	set path=( /opt/sun-ct/bin/ )
 endif
 </file>
-<file name="/etc/man.config" mode="append">
-MANPATH /opt/sun-ct/man
-</file>
-</post>
-
-<!-- Sun Cluster tools libraries on Linux-->
-<post os="linux" arch="i386">
-<file name="/etc/ld.so.conf.d/sunct.conf" perms="0644">
-/opt/sun-ct/lib/
-/opt/sun-ct/lib/openmpi/
-</file>
-/sbin/ldconfig
-</post>
-
-<!-- Sun Cluster tools 64-bit libraries on Linux-->
-<post os="linux" arch="x86_64">
-<file name="/etc/ld.so.conf.d/sunct.conf" perms="0644">
-/opt/sun-ct/lib/lib64
-/opt/sun-ct/lib/lib64/openmpi
-</file>
-/sbin/ldconfig
-</post>
 
 <!-- Sun HPC Cluster tools libraries for SunOS-->
-<post os="sunos">
 crle -u -l /opt/sun-ct/lib/
 crle -u -l /opt/sun-ct/lib/openmpi
 crle -64 -u -l /opt/sun-ct/lib/amd64
 crle -64 -u -l /opt/sun-ct/lib/amd64/openmpi
+</post>
+
+<!-- MPI Selector configuration for Linux-->
+<post os="linux">
+<!-- OpenMPI -->
+cp -f /opt/openmpi/share/mpi-selector/rocks-openmpi* \
+	/var/lib/mpi-selector/data
+
+<!-- Sun HPC Cluster tools -->
+cp -f /opt/sun-ct/share/mpi-selector/sun-ct* \
+	/var/lib/mpi-selector/data
 </post>
 
 </kickstart>
