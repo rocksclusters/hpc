@@ -28,7 +28,7 @@ compute-0-1
 <screen>
 $ ssh-agent $SHELL
 $ ssh-add
-/opt/openmpi/bin/mpirun -np 2 -machinefile machines /opt/mpi-tests/bin/mpi-ring 
+$ /opt/openmpi/bin/mpirun -np 2 -machinefile machines /opt/mpi-tests/bin/mpi-ring 
 </screen>
 
 <para>
