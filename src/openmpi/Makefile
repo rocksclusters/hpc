@@ -1,13 +1,13 @@
 #
-# $Id: Makefile,v 1.11 2010/03/08 04:36:50 anoop Exp $
+# $Id: Makefile,v 1.12 2010/09/07 23:53:20 bruno Exp $
 #
 # @Copyright@
 # 
 # 				Rocks(r)
 # 		         www.rocksclusters.org
-# 		       version 5.2 (Chimichanga)
+# 		         version 5.4 (Maverick)
 # 
-# Copyright (c) 2000 - 2009 The Regents of the University of California.
+# Copyright (c) 2000 - 2010 The Regents of the University of California.
 # All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -56,6 +56,9 @@
 #
 #
 # $Log: Makefile,v $
+# Revision 1.12  2010/09/07 23:53:20  bruno
+# star power for gb
+#
 # Revision 1.11  2010/03/08 04:36:50  anoop
 # Upgraded OpenMPI to 1.4.1
 # Added mpi-selector capability
