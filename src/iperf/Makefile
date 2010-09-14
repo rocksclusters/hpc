@@ -1,5 +1,5 @@
 # --------------------------------------------------- -*- Makefile -*- --
-# $Id: Makefile,v 1.16 2010/09/07 23:53:20 bruno Exp $
+# $Id: Makefile,v 1.17 2010/09/14 17:10:00 bruno Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.17  2010/09/14 17:10:00  bruno
+# don't patch if the patch files don't exist for this version/os
+#
 # Revision 1.16  2010/09/07 23:53:20  bruno
 # star power for gb
 #
@@ -120,9 +123,13 @@ include Rules.mk
 
 prep:
 	gunzip -c iperf-$(VERSION).tar.gz | $(TAR) -xf -
-	-(cd patch-files/iperf-$(VERSION)/$(OS); \
-	  find . -type f | grep -v CVS | 	\
-	  cpio -pudv ../../../iperf-$(VERSION))
+	if [ -d patch-files/iperf-$(VERSION)/$(OS) ] ; then		\
+		(							\
+			cd patch-files/iperf-$(VERSION)/$(OS);		\
+			find . -type f | grep -v CVS |			\
+				cpio -pudv ../../../iperf-$(VERSION);	\
+			);						\
+	fi
 
 
 build: prep
