@@ -12,6 +12,9 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.45  2010/10/01 21:13:46  anoop
+  Make rocks-openmpi the system default MPI
+
   Revision 1.44  2010/03/08 04:38:20  anoop
   Removed OpenMPI and Sun-CT from path and library path from Linux.
   Added mpi-selector capability for both
@@ -240,6 +243,14 @@ cp -f /opt/openmpi/share/mpi-selector/rocks-openmpi* \
 <!-- Sun HPC Cluster tools -->
 cp -f /opt/sun-ct/share/mpi-selector/sun-ct* \
 	/var/lib/mpi-selector/data
+
+<file name="/etc/rc.d/rocksconfig.d/post-92-mpiselector" perms="0755">#!/bin/bash
+
+ROCKSMPI=`/usr/bin/mpi-selector --list | grep rocks-openmpi`
+/usr/bin/mpi-selector --system --set $ROCKSMPI
+
+</file>
+
 </post>
 
 </kickstart>
