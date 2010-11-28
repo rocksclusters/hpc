@@ -1,1 +1,1 @@
-TARGET = Solaris
+TARGET = Solaris10cc-64

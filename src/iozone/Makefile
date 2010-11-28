@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.21 2010/09/07 23:53:20 bruno Exp $
+# $Id: Makefile,v 1.22 2010/11/28 00:40:34 anoop Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.22  2010/11/28 00:40:34  anoop
+# Solaris 64-bit support for iozone
+#
 # Revision 1.21  2010/09/07 23:53:20  bruno
 # star power for gb
 #
@@ -112,11 +115,14 @@ DOCS		= IOzone_msword_98.pdf Run_rules.doc IOzone_msword_98.doc \
 
 build:
 	$(TAR) xf $(NAME)$(IOZONE_VERSION).tar
+	-(cd patch-files && \
+		find $(NAME)$(IOZONE_VERSION) -type f | \
+		grep -v CVS | cpio -pudv ../;		\
+	)
 	(								\
 		cd $(NAME)$(IOZONE_VERSION)/src/current;		\
 		$(MAKE) $(TARGET);					\
 	)
-	
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/bin
