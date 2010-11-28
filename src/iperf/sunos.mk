@@ -1,0 +1,1 @@
+OSFLAGS=CXXFLAGS=-lrt

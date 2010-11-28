@@ -1,5 +1,5 @@
 # --------------------------------------------------- -*- Makefile -*- --
-# $Id: Makefile,v 1.17 2010/09/14 17:10:00 bruno Exp $
+# $Id: Makefile,v 1.18 2010/11/28 00:42:10 anoop Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.18  2010/11/28 00:42:10  anoop
+# Solaris support for iperf-2.0.5
+#
 # Revision 1.17  2010/09/14 17:10:00  bruno
 # don't patch if the patch files don't exist for this version/os
 #
@@ -135,7 +138,7 @@ prep:
 build: prep
 	(					\
 		cd iperf-$(VERSION) ;		\
-		./configure --prefix=$(PKGROOT);\
+		./configure --prefix=$(PKGROOT) $(OSFLAGS);\
 		$(MAKE) ;			\
 	)
 install::
