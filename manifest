@@ -5,7 +5,6 @@ mpich2-ethernet-gnu
 mpi-tests
 rocks-openmpi
 rocks-pvm
-rocks-referenceguide
 roll-hpc-kickstart
 roll-hpc-usersguide
 stream
