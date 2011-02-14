@@ -1,10 +1,17 @@
 <!--
-$Id: index.sgml,v 1.1 2008/04/14 22:31:08 bruno Exp $
+$Id: index.sgml,v 1.2 2011/02/14 22:14:16 mjk Exp $
 
 @Copyright@
 @Copyright@
 
 $Log: index.sgml,v $
+Revision 1.2  2011/02/14 22:14:16  mjk
+- Build Env
+  - ROLLNAME defaults to ROLL
+  - Fixes for docbook
+- All userguides build again
+- All userguides are now NOARCH rpms
+
 Revision 1.1  2008/04/14 22:31:08  bruno
 new HPC roll user's guide
 
@@ -24,7 +31,7 @@ Revision 1.1  2006/09/14 23:54:35  mjk
 <book>
 <bookinfo>
 
-	<title> HPC Roll: Users Guide </title>
+	<title> &roll-hpc; Users Guide </title>
 
 	<subtitle>
 		<inlinemediaobject>
@@ -34,11 +41,11 @@ Revision 1.1  2006/09/14 23:54:35  mjk
 		</inlinemediaobject>
 	</subtitle>
 
-        <edition>Version &document_version;</edition>
-        <pubdate>&document_pubdate;</pubdate>
+        <edition>&document-version;</edition>
+        <pubdate>&document-pubdate;</pubdate>
         <copyright id="copyright" xreflabel="copyright">
-                <year>&document_year;</year>
-                <holder>&document_copyright;</holder>    
+                <year>&document-year;</year>
+                <holder>&document-copyright;</holder>    
         </copyright>
 
         <releaseinfo>
@@ -47,17 +54,17 @@ Revision 1.1  2006/09/14 23:54:35  mjk
 
         <legalnotice>
                 <para>
-                This document is subject to the Rocks License 
+                This document is subject to the &rocks; License 
                 (see <xref linkend="rocks-copyright">).
                 </para>
         </legalnotice>
 
 </bookinfo>
 
-&source_preface;
-&source_roll-overview;
-&source_installing;
-&source_using;
-&source_appendix;
+&source-preface;
+&source-roll-overview;
+&source-installing;
+&source-using;
+&source-appendix;
 
 </book>

@@ -1,5 +1,5 @@
 <!--
-$Id: appendix.sgml,v 1.1 2008/04/14 22:31:08 bruno Exp $
+$Id: appendix.sgml,v 1.2 2011/02/14 22:14:16 mjk Exp $
 
 Appendix for Copyright and License notices
 
@@ -7,6 +7,13 @@ Appendix for Copyright and License notices
 @Copyright@
 
 $Log: appendix.sgml,v $
+Revision 1.2  2011/02/14 22:14:16  mjk
+- Build Env
+  - ROLLNAME defaults to ROLL
+  - Fixes for docbook
+- All userguides build again
+- All userguides are now NOARCH rpms
+
 Revision 1.1  2008/04/14 22:31:08  bruno
 new HPC roll user's guide
 
@@ -23,7 +30,7 @@ Revision 1.1  2006/09/14 23:54:35  mjk
 -->
 
 <appendix id="rocks-copyright" xreflabel="Appendix A: Rocks Copyright">
-<title>Rocks Copyright</title>
+<title>&rocks; Copyright</title>
 <para>
 <screen>
 &rockscopyright;
@@ -34,7 +41,7 @@ Revision 1.1  2006/09/14 23:54:35  mjk
 <appendix>
 <title>Third Party Copyrights and Licenses</title>
 
-&source_roll-copyright-disclaimer;
+&source-roll-copyright-disclaimer;
 
 <section><title>iozone</title><para><screen>
      Original Author: William Norcott (wnorcott@us.oracle.com)
