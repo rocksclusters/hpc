@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.6 2010/09/07 23:53:20 bruno Exp $
+# $Id: Makefile,v 1.7 2011/07/14 05:00:14 anoop Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.7  2011/07/14 05:00:14  anoop
+# Upgrade makefile to use new options for compiling
+#
 # Revision 1.6  2010/09/07 23:53:20  bruno
 # star power for gb
 #
@@ -82,12 +85,13 @@ include Rules.mk
 
 
 build:
-	tar zvfx mpich2-$(VERSION).tar.gz
+	tar xzf mpich2-$(VERSION).tar.gz
 	( 							\
 		cd mpich2-$(VERSION) ;				\
-		F90=gfortran ./configure --prefix=$(PKGROOT)	\
-			--with-device="ch3:ssm" --enable-fast	\
-			--enable-f90				\
+		FC=gfortran ./configure --prefix=$(PKGROOT)	\
+			--with-device="ch3:nemesis" 		\
+			--enable-fast --enable-fc 		\
+			--enable-shared				\
 			--enable-sharedlibs=gcc ;		\
 		$(MAKE) ;					\
 	)
