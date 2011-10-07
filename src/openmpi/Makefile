@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.13 2011/07/23 02:31:05 phil Exp $
+# $Id: Makefile,v 1.14 2011/10/07 18:52:00 anoop Exp $
 #
 # @Copyright@
 # 
@@ -56,6 +56,9 @@
 #
 #
 # $Log: Makefile,v $
+# Revision 1.14  2011/10/07 18:52:00  anoop
+# Bug fix
+#
 # Revision 1.13  2011/07/23 02:31:05  phil
 # Viper Copyright
 #
@@ -94,7 +97,7 @@ build:
 	(					\
 		cd openmpi-$(VERSION) ;		\
 		./configure --prefix=$(PKGROOT) \
-			--with-sge=/opt/gridengine \
+			--with-sge \
 			--enable-static ;	\
 		$(MAKE) all ;			\
 	)
