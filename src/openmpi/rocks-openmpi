@@ -1,0 +1,23 @@
+#%Module1.0#####################################################################
+##
+## rocks-openmpi modulefile
+##
+## modulefiles/
+##
+proc ModulesHelp { } {
+	global rocks-openmpiversion 
+
+	puts stderr "\t Use /opt/rocks/openmpi as your MPI"
+	puts stderr "\n\tVersion $rocks-openmpiversion\n"
+}
+
+module-whatis	"adds `.' to your PATH environment variable"
+
+# for Tcl script use only
+set	rocks-openmpiversion 1.4.3	
+
+set mpiHome /opt/openmpi
+setenv MPIHOME $mpiHome
+prepend-path	PATH $mpiHome/bin	
+prepend-path	LD_LIBRARY_PATH $mpiHome/lib	
+

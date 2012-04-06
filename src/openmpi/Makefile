@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.14 2011/10/07 18:52:00 anoop Exp $
+# $Id: Makefile,v 1.15 2012/04/06 19:49:49 phil Exp $
 #
 # @Copyright@
 # 
@@ -56,6 +56,9 @@
 #
 #
 # $Log: Makefile,v $
+# Revision 1.15  2012/04/06 19:49:49  phil
+# environment modules file
+#
 # Revision 1.14  2011/10/07 18:52:00  anoop
 # Bug fix
 #
@@ -91,6 +94,8 @@ REDHAT.ROOT = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
+MODULESPATH = /usr/share/Modules/modulefiles/
+MODULESFILE = rocks-openmpi
 
 build:
 	bunzip2 -c openmpi-$(VERSION).tar.bz2 | $(TAR) -xf -
@@ -109,6 +114,9 @@ install::
 	)
 	( find mpi-selector -type f | grep -v CVS | \
 		cpio -pudv $(ROOT)/$(PKGROOT)/share/ )
+
+	mkdir -p $(ROOT)/$(MODULESPATH)
+	install -m 755 $(MODULESFILE) $(ROOT)/$(MODULESPATH)
 
 clean::
 	rm -rf openmpi-$(VERSION)
