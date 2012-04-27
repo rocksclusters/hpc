@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.8 2011/07/23 02:31:05 phil Exp $
+# $Id: Makefile,v 1.9 2012/04/27 05:00:59 phil Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.9  2012/04/27 05:00:59  phil
+# Update version of mpich2
+#
 # Revision 1.8  2011/07/23 02:31:05  phil
 # Viper Copyright
 #
@@ -95,7 +98,10 @@ build:
 			--with-device="ch3:nemesis" 		\
 			--enable-fast --enable-fc 		\
 			--enable-shared				\
-			--enable-sharedlibs=gcc ;		\
+			--enable-sharedlibs=gcc 		\
+			--enable-threads=runtime 		\
+			--enable-romio		 		\
+			--enable-smpcoll  ;			\
 		$(MAKE) ;					\
 	)
 	
@@ -105,6 +111,7 @@ install::
 		cd mpich2-$(VERSION) ;				\
 		$(MAKE) prefix=$(ROOT)/$(PKGROOT) install ;	\
 	)
+	find $(ROOT) -type f -exec /bin/sed -i "s%$(ROOT)%%g" {} \;
 
 clean::
 	rm -rf mpich2-$(VERSION)
