@@ -12,6 +12,9 @@
 
   <changelog>
   $Log: mpi.xml,v $
+  Revision 1.46  2012/04/30 20:17:26  phil
+  remove post-92 mpi-selector. Use enviornment-modules instead. But leave mpi-selector files in place
+
   Revision 1.45  2010/10/01 21:13:46  anoop
   Make rocks-openmpi the system default MPI
 
@@ -243,13 +246,6 @@ cp -f /opt/openmpi/share/mpi-selector/rocks-openmpi* \
 <!-- Sun HPC Cluster tools -->
 cp -f /opt/sun-ct/share/mpi-selector/sun-ct* \
 	/var/lib/mpi-selector/data
-
-<file name="/etc/rc.d/rocksconfig.d/post-92-mpiselector" perms="0755">#!/bin/bash
-
-ROCKSMPI=`/usr/bin/mpi-selector --list | grep rocks-openmpi`
-/usr/bin/mpi-selector --system --set $ROCKSMPI
-
-</file>
 
 </post>
 
