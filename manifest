@@ -2,6 +2,7 @@ iozone
 iperf
 mpich2-ethernet-gnu
 mpi-tests
+rocks-hpc-profile
 rocks-openmpi
 rocks-pvm
 roll-hpc-kickstart

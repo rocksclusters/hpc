@@ -1,3 +1,65 @@
+<section id="environment_modules" xreflabel="Environment Modules for OpenMPI">
+	<title>Environment Modules for OpenMPI</title>
+
+<para>
+As of Rocks 5.5 and 6.0 (Mamba), Environment Modules are utilized to control
+MPI path names.   By default the rocks-openmpi module is loaded and
+is openmpi compiled with gnu compiler and the ethernet device. 
+</para>
+
+<itemizedlist>
+
+<listitem>
+	<para>
+	To see the currently loaded modules:
+	</para>
+
+<screen>
+% module list
+Currently Loaded Modulefiles:
+  1) rocks-openmpi
+%
+</screen>
+</listitem>
+
+<listitem>
+	<para>
+	To see available modules:
+	</para>
+
+<screen>
+% module avail
+------------------------ /usr/share/Modules/modulefiles ------------------------
+dot           module-info   null          use.own
+module-cvs    modules       rocks-openmpi
+
+------------------------ /usr/share/Modules/modulefiles ------------------------
+dot           module-info   null          use.own
+module-cvs    modules       rocks-openmpi
+%
+</screen>
+
+</listitem>
+
+<listitem>
+	<para>
+	To NOT load the Rocks default module Definition. Set the environment
+	variable ROCKS_MODULE_USER_DEF to a non-zero string. 
+	</para>
+
+<screen>
+export ROCKS_USER_MODULE_DEF=True
+</screen>
+<tip>
+<para> if modules are already loaded, then ROCKS_USER_MODULE_DEF will not
+unload already loaded modules.  If you do not want the Rocks default then set the above definition in your $HOME/.bashrc or $HOME/.cshrc  files
+</para>
+</tip>
+</listitem>
+</itemizedlist>
+
+</section>
+
 <section id="using_openmpi" xreflabel="Using mpirun from OpenMPI">
 	<title>Using mpirun from OpenMPI</title>
 

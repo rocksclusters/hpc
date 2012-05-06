@@ -1,6 +1,6 @@
+# $Id: rocks-hpc.sh,v 1.1 2012/05/06 01:11:06 phil Exp $
 #
-# $Id: Makefile,v 1.17 2012/05/06 01:11:06 phil Exp $
-#
+# load the defaults rocks-openmpi module
 # @Copyright@
 # 
 # 				Rocks(r)
@@ -54,77 +54,13 @@
 # 
 # @Copyright@
 #
-# $Log: Makefile,v $
-# Revision 1.17  2012/05/06 01:11:06  phil
+# $Log: rocks-hpc.sh,v $
+# Revision 1.1  2012/05/06 01:11:06  phil
 # Add default module definition for rocks-openmpi.
 #
-# Revision 1.16  2011/07/23 02:31:06  phil
-# Viper Copyright
 #
-# Revision 1.15  2010/09/07 23:53:21  bruno
-# star power for gb
-#
-# Revision 1.14  2009/05/04 17:56:00  phil
-# Update to streams 5.9. Supports OpenMP Threads
-#
-# Revision 1.13  2009/05/01 19:07:18  mjk
-# chimi con queso
-#
-# Revision 1.12  2008/10/18 00:56:10  mjk
-# copyright 5.1
-#
-# Revision 1.11  2008/10/15 20:13:05  mjk
-# - more changes to build outside of the tree
-# - removed some old fds-only targets
-#
-# Revision 1.10  2008/05/21 17:46:56  anoop
-# Merginig code from mercurial.
-# This change makes the HPC roll more solaris friendly
-#
-# Revision 1.9  2008/03/06 23:41:54  mjk
-# copyright storm on
-#
-# Revision 1.8  2007/06/23 04:03:41  mjk
-# mars hill copyright
-#
-# Revision 1.7  2007/01/17 15:19:49  bruno
-# nuked spec file for stream
-#
-#
+# 
 
-
-RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
-REDHAT.ROOT     = $(CURDIR)/../../
--include $(ROCKSROOT)/etc/Rules.mk
-include Rules.mk
--include $(OS).mk
-
-SUPPORTFILES = READ.ME HISTORY.txt LICENSE.txt ROCKS.txt
-CODEFILES = stream.c stream.f mysecond.c Makefile linux.mk sunos.mk version.mk
-
-build: stream stream_f
-
-stream: stream.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-stream.o: stream.c
-	$(CC) $(CFLAGS) -c -DN=$(MEMSIZE) -o$@ $^
-
-stream_f: stream.f mysecond.o
-	$(CC) $(CFLAGS) -c mysecond.c
-	$(FORTRAN) $(FFLAGS) -c stream.f -o stream_f.o
-	$(FORTRAN) stream_f.o mysecond.o -o stream_f
-
-	
-install::
-	mkdir -p $(ROOT)/$(PKGROOT)/bin
-	$(INSTALL) -m555 stream stream_f $(ROOT)/$(PKGROOT)/bin
-	mkdir -p $(ROOT)/$(PKGROOT)/docs
-	$(INSTALL) -m644 $(SUPPORTFILES) $(CODEFILES) $(ROOT)/$(PKGROOT)/docs
-
-
-clean::
-	$(RM) -f *.o
-	$(RM) -f stream stream_f
-	$(RM) -f $(NAME).spec.in
-
+if [ -z ${ROCKS_USER_MODULE_DEF-""} ]; then
+	module add rocks-openmpi 2>/dev/null
+fi

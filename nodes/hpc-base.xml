@@ -12,6 +12,9 @@ popular libraries for HPC work.
 
 <changelog>
 $Log: hpc-base.xml,v $
+Revision 1.15  2012/05/06 01:11:06  phil
+Add default module definition for rocks-openmpi.
+
 Revision 1.14  2008/04/07 23:05:34  bruno
 nuke atlas and hpl
 
@@ -55,6 +58,8 @@ Added atlas, moved syslinux
 Revision 1.1  2003/07/07 20:47:51  bruno
 initial release
 </changelog>
+
+<package>rocks-hpc-profile</package>
 
 </kickstart> 
 
