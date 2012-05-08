@@ -1,5 +1,5 @@
 # --------------------------------------------------- -*- Makefile -*- --
-# $Id: Makefile,v 1.16 2012/05/08 00:00:32 phil Exp $
+# $Id: Makefile,v 1.17 2012/05/08 00:00:58 phil Exp $
 #
 # @Copyright@
 # 
@@ -56,6 +56,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.17  2012/05/08 00:00:58  phil
+# Copy PVM RPMs for 6
+#
 # Revision 1.16  2012/05/08 00:00:32  phil
 # Add the PVM RPMS for 6
 #
