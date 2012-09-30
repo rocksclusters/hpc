@@ -2,7 +2,7 @@
 #
 # This file should remain OS independent
 #
-# $Id: bootstrap.sh,v 1.14 2012/05/06 05:49:09 phil Exp $
+# $Id: bootstrap.sh,v 1.15 2012/09/30 21:58:55 phil Exp $
 #
 # @Copyright@
 # 
@@ -59,6 +59,11 @@
 # @Copyright@
 #
 # $Log: bootstrap.sh,v $
+# Revision 1.15  2012/09/30 21:58:55  phil
+# Update openmpi to 1.6.2.
+# Create Modules for ethernet and IB
+# Add IB support - packages, openmpi configuration, udev rules
+#
 # Revision 1.14  2012/05/06 05:49:09  phil
 # Copyright Storm for Mamba
 #
@@ -121,8 +126,9 @@
 . $ROLLSROOT/etc/bootstrap-functions.sh
 
 if [ `./_os` == "linux" ]; then
-	compile openmpi
-	install rocks-openmpi
+	install_os_packages hpc-base 
+	#compile openmpi
+	#install rocks-openmpi
 fi
 
 if [ `./_os` == "sunos" ]; then

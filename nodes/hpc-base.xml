@@ -12,6 +12,11 @@ popular libraries for HPC work.
 
 <changelog>
 $Log: hpc-base.xml,v $
+Revision 1.16  2012/09/30 21:58:55  phil
+Update openmpi to 1.6.2.
+Create Modules for ethernet and IB
+Add IB support - packages, openmpi configuration, udev rules
+
 Revision 1.15  2012/05/06 01:11:06  phil
 Add default module definition for rocks-openmpi.
 
@@ -60,6 +65,47 @@ initial release
 </changelog>
 
 <package>rocks-hpc-profile</package>
+<package>rocks-openmpi-modules</package>
 
+<!-- Infiniband Pacakages --> 
+<package>compat-dapl</package>
+<package>compat-dapl-devel</package>
+<package>dapl</package>
+<package>dapl-utils</package>
+<package>dapl-devel</package>
+<package>ibutils</package>
+<package>ibutils</package>
+<package>infiniband-diags</package>
+<package>libibmad</package>
+<package>libibmad-devel</package>
+<package>libibumad</package>
+<package>libibumad-devel</package>
+<package>libibverbs</package>
+<package>libibverbs-devel</package>
+<package>libmlx4</package>
+<package>libmthca</package>
+<package>mpitests-openmpi</package>
+<package>rdma</package>
+
+<post>
+<file name="/etc/security/limits.d/91-infiniband.conf">
+# Infiniband userspace needs to unlimited memlock limits
+*               soft    memlock unlimited
+*               hard    memlock unlimited
+</file>
+
+<!--Infiniband Devices need to be world writable -->
+<file name="/etc/udev/rules.d/95-infiniband.rules">
+KERNEL=="umad*", NAME="infiniband/%k", MODE="0666"
+KERNEL=="issm*", NAME="infiniband/%k", MODE="0666"
+KERNEL=="ucm*", NAME="infiniband/%k", MODE="0666"
+KERNEL=="rdma_cm*", NAME="infiniband/%k", MODE="0666"
+KERNEL=="uverbs*", NAME="infiniband/%k", MODE="0666"
+</file>
+
+<!-- turn on various services -->
+/sbin/chkconfig --level 3 rdma on
+/sbin/chkconfig --level 5 rdma on
+</post>
 </kickstart> 
 

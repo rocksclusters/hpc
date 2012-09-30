@@ -11,13 +11,14 @@ proc ModulesHelp { } {
 	puts stderr "\n\tVersion $rocks-openmpiversion\n"
 }
 
-module-whatis	"adds `.' to your PATH environment variable"
+module-whatis	"Use Rocks-compiled OpenMPI with tcp,self transport"
 
 # for Tcl script use only
-set	rocks-openmpiversion 1.4.3	
+set	rocks-openmpiversion @VERSION@
 
 set mpiHome /opt/openmpi
 setenv MPIHOME $mpiHome
+setenv OMPI_MCA_btl tcp,self 
 prepend-path	PATH $mpiHome/bin	
 prepend-path	LD_LIBRARY_PATH $mpiHome/lib	
 

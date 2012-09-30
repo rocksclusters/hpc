@@ -4,6 +4,7 @@ mpich2-ethernet-gnu
 mpi-tests
 rocks-hpc-profile
 rocks-openmpi
+rocks-openmpi-modules
 rocks-pvm
 roll-hpc-kickstart
 roll-hpc-usersguide
