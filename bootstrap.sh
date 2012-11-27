@@ -2,7 +2,7 @@
 #
 # This file should remain OS independent
 #
-# $Id: bootstrap.sh,v 1.16 2012/11/27 00:49:00 phil Exp $
+# $Id: bootstrap.sh,v 1.17 2012/11/27 19:31:18 phil Exp $
 #
 # @Copyright@
 # 
@@ -59,6 +59,9 @@
 # @Copyright@
 #
 # $Log: bootstrap.sh,v $
+# Revision 1.17  2012/11/27 19:31:18  phil
+# compile/install rocks-openmpi, rocks-openmpi-modules so that elements in bio roll will build
+#
 # Revision 1.16  2012/11/27 00:49:00  phil
 # Copyright Storm for Emerald Boa
 #
@@ -130,8 +133,9 @@
 
 if [ `./_os` == "linux" ]; then
 	install_os_packages hpc-base 
-	#compile openmpi
-	#install rocks-openmpi
+	compile openmpi
+	install rocks-openmpi
+	compile_and_install rocks-openmpi-modules
 fi
 
 if [ `./_os` == "sunos" ]; then
