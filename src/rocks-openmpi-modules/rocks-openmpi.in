@@ -18,7 +18,7 @@ set	rocks-openmpiversion @VERSION@
 
 set mpiHome /opt/openmpi
 setenv MPIHOME $mpiHome
-setenv OMPI_MCA_btl tcp,self 
+setenv OMPI_MCA_btl self,sm,tcp
 prepend-path	PATH $mpiHome/bin	
 prepend-path	LD_LIBRARY_PATH $mpiHome/lib	
 
