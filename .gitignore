@@ -1,0 +1,45 @@
+
+# build directory
+BUILD/
+RPMS/
+SOURCES/
+SPECS/
+
+
+*.pyc
+
+_os
+_arch
+_distribution
+
+# ignore version.mk
+rocks-version.mk
+rocks-version-common.mk
+
+# ignore python.mk
+python.mk
+
+# ignore Rules files
+Rules-install.mk
+Rules-linux-centos.mk
+Rules-linux.mk
+Rules-rcfiles.mk
+Rules-scripts.mk
+Rules.mk
+Rolls.mk
+
+# --- BEGIN --- binaries files
+src/iozone/iozone3_397.tar
+src/iperf/iperf-2.0.5.tar.gz
+src/mpich2/mpich2-1.4.1p1.tar.gz
+src/openmpi/openmpi-1.4.3.tar.bz2
+src/openmpi/openmpi-1.6.2.tar.bz2
+src/pvm/pvm3-examples.tar
+src/RPMS/pvm-3.4.6-1.el6.i686.rpm
+src/RPMS/pvm-3.4.6-1.el6.x86_64.rpm
+src/RPMS/pvm-gui-3.4.6-1.el6.i686.rpm
+src/RPMS/pvm-gui-3.4.6-1.el6.x86_64.rpm
+src/sun-ct/sun-hpc-ct-8.2.1-docs.tar.gz
+src/sun-ct/sun-hpc-ct-8.2.1-Linux-gnu.tar.gz
+src/sun-ct/sun-hpc-ct-8.2.1-SunOS-i386.tar.gz
+# --- END ---

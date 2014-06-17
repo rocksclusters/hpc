@@ -1,0 +1,13 @@
+6095a38542286376f6eb2a203f253dc4c31ddeda  src/iozone/iozone3_397.tar
+7302792dcb1bd7aeba032fef6d3dcc310e4d113f  src/iperf/iperf-2.0.5.tar.gz
+8dcc8888fb27232eb8f76c11cc890f1c3c483804  src/mpich2/mpich2-1.4.1p1.tar.gz
+9d24b6969d73605904855eb32d40d6b07e231932  src/openmpi/openmpi-1.4.3.tar.bz2
+694fd3bac911cdb22f77175884d819b6fea871df  src/openmpi/openmpi-1.6.2.tar.bz2
+40f1ad9a3262cac513e3ec4982826ba6f825f81e  src/pvm/pvm3-examples.tar
+5c58f3db22aa26b3801eb1e01d5bc6dc9c261b6d  src/RPMS/pvm-3.4.6-1.el6.i686.rpm
+9a662be82390cdae30406b1dee57e299d54634c5  src/RPMS/pvm-3.4.6-1.el6.x86_64.rpm
+f4ca2bd8c8db02c9a6fa811f67a21576d9ba3161  src/RPMS/pvm-gui-3.4.6-1.el6.i686.rpm
+378424a5edd7e11dfa8d7210f80b9e9891d88701  src/RPMS/pvm-gui-3.4.6-1.el6.x86_64.rpm
+b2607294534861b13299dbbd1c73ca10b8ceee31  src/sun-ct/sun-hpc-ct-8.2.1-docs.tar.gz
+784301d1aa66a0ada2654aafba6a3ae7cdb09e25  src/sun-ct/sun-hpc-ct-8.2.1-Linux-gnu.tar.gz
+02cc421d0d45f445e83b4bfbe60c6b519956bcf1  src/sun-ct/sun-hpc-ct-8.2.1-SunOS-i386.tar.gz
