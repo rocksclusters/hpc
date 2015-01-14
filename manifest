@@ -1,5 +1,5 @@
 iozone
-iperf
+opt-iperf
 mpich2-ethernet-gnu
 mpi-tests
 rocks-hpc-profile

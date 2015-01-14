@@ -66,7 +66,7 @@ put all benchmarks into one .xml file
 <package os="sunos">ROCKSstream</package>
 
 <!-- iperf - network performance tester -->
-<package os="linux">iperf</package>
+<package os="linux">opt-iperf</package>
 <package os="sunos">ROCKSiperf</package>
 
 <!-- iozone - file system benchmark -->
