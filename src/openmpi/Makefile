@@ -109,12 +109,13 @@ include Rules.mk
 	$(SED) $(SEDSCRIPT) $^ > $@
 
 build:
-	bunzip2 -c openmpi-$(VERSION).tar.bz2 | $(TAR) -xf -
+	$(CAT-COMPRESS) openmpi-$(VERSION).$(TARBALL-EXTENSION) |  $(TAR) -xf -
 	(					\
 		cd openmpi-$(VERSION) ;		\
 		./configure --prefix=$(PKGROOT) \
-			--with-openib --with-udapl \
+			--with-openib \
 			--with-sge \
+			--with-slurm \
 			--enable-static ;	\
 		$(MAKE) all ;			\
 	)
