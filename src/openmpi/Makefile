@@ -99,7 +99,6 @@
 #
 #
 
-PKGROOT = /opt/openmpi
 REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
