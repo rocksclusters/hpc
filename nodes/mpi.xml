@@ -177,74 +177,26 @@
 
   </changelog>
 
-<package os="linux">mpich2-ethernet-gnu</package>
+<package os="linux">mpich3-ethernet-gnu</package>
 <package os="linux">rocks-openmpi</package>
 <package os="linux">openmpi</package>
 <package os="linux">openmpi-libs</package>
 <package os="linux">openmpi-devel</package>
 <package os="linux">mpi-tests</package>
-<package os="linux">ClusterTools_gnu</package>
-<package os="linux">sunct-extra</package>
-
-<package os="sunos">SUNWompi</package>
-<package os="sunos">SUNWompiat</package>
-<package os="sunos">SUNWompimn</package>
-<package os="sunos">SUNWompir</package>
-<package os="sunos">SUNWomsc</package>
-
-<package os="sunos">ROCKSsunct-extra</package>
-<package os="sunos">ROCKSmpi-tests</package>
 
 <post os="linux">
 <!-- Add man pages to MANPATH -->
 <file name="/etc/man.config" mode="append">
 MANPATH	/opt/openmpi/share/man
-MANPATH /opt/sun-ct/man
-MANPATH /opt/mpich2/gnu/man
+MANPATH /opt/mpich3/gnu/man
 </file>
 </post>
 
-<!-- Sun HPC Cluster tools -->
-<!-- 
-	Create common link to Sun HPC cluster
-	tools on SunOS and Linux
--->
-<post os="linux">
-ln -s /opt/SUNWhpc/HPC8.2.1/gnu /opt/sun-ct
-</post>
-
-<post os="sunos">
-ln -s /opt/SUNWhpc/HPC8.2.1/sun /opt/sun-ct
-</post>
-
-<post os="sunos">
-<!-- Sun Cluster tools path -->
-<file name="/etc/profile.d/sun-ct.sh" perms="0755">
-PATH=$PATH:/opt/sun-ct/bin
-</file>
-<file name="/opt/profile.d/sun-ct.csh" perms="0755">
-if ( ${?path} ) then
-	set path=( $path /opt/sun-ct/bin/ )
-else 
-	set path=( /opt/sun-ct/bin/ )
-endif
-</file>
-
-<!-- Sun HPC Cluster tools libraries for SunOS-->
-crle -u -l /opt/sun-ct/lib/
-crle -u -l /opt/sun-ct/lib/openmpi
-crle -64 -u -l /opt/sun-ct/lib/amd64
-crle -64 -u -l /opt/sun-ct/lib/amd64/openmpi
-</post>
 
 <!-- MPI Selector configuration for Linux-->
-<post os="linux">
+<post cond="rocks_version_major == 6" os="linux">
 <!-- OpenMPI -->
 cp -f /opt/openmpi/share/mpi-selector/rocks-openmpi* \
-	/var/lib/mpi-selector/data
-
-<!-- Sun HPC Cluster tools -->
-cp -f /opt/sun-ct/share/mpi-selector/sun-ct* \
 	/var/lib/mpi-selector/data
 
 </post>
