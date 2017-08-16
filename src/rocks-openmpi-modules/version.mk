@@ -7,3 +7,5 @@ include $(VERSION.MK.INCLUDE)
 NAME		= rocks-openmpi-modules
 RELEASE		= 1
 RPM.REQUIRES	= environment-modules
+PKGROOT = /usr/share/Modules/modulefiles
+RPM.FILES	= $(PKGROOT)/*
