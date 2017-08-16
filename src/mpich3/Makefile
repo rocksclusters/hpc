@@ -97,12 +97,12 @@ include Rules.mk
 
 
 build:
-	tar xzf mpich2-$(VERSION).tar.gz
+	tar xzf $(BASEDIR).tar.gz
 	( 							\
-		cd mpich2-$(VERSION) ;				\
+		cd $(BASEDIR) ;				\
 		FC=gfortran ./configure --prefix=$(PKGROOT)	\
 			--with-device="ch3:nemesis" 		\
-			--enable-fast --enable-fc 		\
+			--enable-fast --enable-fortran 		\
 			--enable-shared				\
 			--enable-sharedlibs=gcc 		\
 			--enable-threads=runtime 		\
@@ -114,10 +114,10 @@ build:
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
 	(							\
-		cd mpich2-$(VERSION) ;				\
+		cd $(BASEDIR) ;				\
 		$(MAKE) prefix=$(ROOT)/$(PKGROOT) install ;	\
 	)
 	find $(ROOT) -type f -exec /bin/sed -i "s%$(ROOT)%%g" {} \;
 
 clean::
-	rm -rf mpich2-$(VERSION)
+	rm -rf $(BASEDIR)
