@@ -1,5 +1,6 @@
 NAME	= stream
-VERSION	= 5.9
+VERSION	= 5.10
 RELEASE	= 1
 
 PKGROOT	= /opt/stream
+RPM.FILES = $(PKGROOT)

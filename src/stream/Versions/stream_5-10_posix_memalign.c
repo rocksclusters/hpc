@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------*/
 /* Program: STREAM                                                       */
-/* Revision: $Id: stream.c,v 5.10 2013/01/17 16:01:06 mccalpin Exp mccalpin $ */
+/* Revision: $Id: stream.c,v 5.10.1 2014/06/17 08:16:08 mccalpin Exp mccalpin $ */
 /* Original code developed by John D. McCalpin                           */
 /* Programmers: John D. McCalpin                                         */
 /*              Joe R. Zagar                                             */
@@ -41,6 +41,7 @@
 /*  5. Absolutely no warranty is expressed or implied.                   */
 /*-----------------------------------------------------------------------*/
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
 # include <float.h>
@@ -98,7 +99,10 @@
  *         for any iteration after the first, therefore the minimum value
  *         for NTIMES is 2.
  *      There are no rules on maximum allowable values for NTIMES, but
- *         values larger than the default are unlikely to noticeably
+ *         when running with STREAM_TYPE=float, the results will overflow
+ *         if NTIMES exceeds 32.  Results will probably overflow at some
+ *         point with STREAM_TYPE=double, but I have not checked the exact value.
+ *         Values larger than the default are unlikely to noticeably
  *         increase the reported performance.
  *      NTIMES can also be set on the compile line without changing the source
  *         code using, for example, "-DNTIMES=7".
@@ -176,9 +180,10 @@
 #define STREAM_TYPE double
 #endif
 
-static STREAM_TYPE	a[STREAM_ARRAY_SIZE+OFFSET],
-			b[STREAM_ARRAY_SIZE+OFFSET],
-			c[STREAM_ARRAY_SIZE+OFFSET];
+//static STREAM_TYPE	a[STREAM_ARRAY_SIZE+OFFSET],
+//			b[STREAM_ARRAY_SIZE+OFFSET],
+//			c[STREAM_ARRAY_SIZE+OFFSET];
+double *a,*b,*c;
 
 static double	avgtime[4] = {0}, maxtime[4] = {0},
 		mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
@@ -213,6 +218,7 @@ main()
     ssize_t		j;
     STREAM_TYPE		scalar;
     double		t, times[4][NTIMES];
+	size_t		arraybytes,arrayalignment;
 
     /* --- SETUP --- determine precision and check timing --- */
 
@@ -222,6 +228,24 @@ main()
     BytesPerWord = sizeof(STREAM_TYPE);
     printf("This system uses %d bytes per array element.\n",
 	BytesPerWord);
+
+    arraybytes = (STREAM_ARRAY_SIZE + OFFSET)*sizeof(STREAM_TYPE);
+    arrayalignment = 64;
+	k = posix_memalign((void **)&a, arrayalignment, arraybytes);
+	if (k != 0) {
+		printf("Allocation of array a failed, return code is %d\n",k);
+		exit(1);
+	}
+	k = posix_memalign((void **)&b, arrayalignment, arraybytes);
+	if (k != 0) {
+		printf("Allocation of array b failed, return code is %d\n",k);
+		exit(1);
+	}
+	k = posix_memalign((void **)&c, arrayalignment, arraybytes);
+	if (k != 0) {
+		printf("Allocation of array c failed, return code is %d\n",k);
+		exit(1);
+	}
 
     printf(HLINE);
 #ifdef N
@@ -363,7 +387,7 @@ main()
     for (j=0; j<4; j++) {
 		avgtime[j] = avgtime[j]/(double)(NTIMES-1);
 
-		printf("%s%12.1f  %11.6f  %11.6f  %11.6f\n", label[j],
+		printf("%s%11.4f  %11.4f  %11.4f  %11.4f\n", label[j],
 	       1.0E-06 * bytes[j]/mintime[j],
 	       avgtime[j],
 	       mintime[j],

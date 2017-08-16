@@ -1,5 +1,13 @@
 -------------------------------------------------------------------------
 
+Revisions as of Thu, Jan 17, 2013  3:50:01 PM
+
+Version 5.10 of stream.c has been released.
+This version includes improved validation code and will automatically
+use 64-bit array indices on 64-bit systems to allow very large arrays.
+
+-------------------------------------------------------------------------
+
 Revisions as of Thu Feb 19 08:16:57 CST 2009
 
 Note that the codes in the "Versions" subdirectory should be

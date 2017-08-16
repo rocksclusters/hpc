@@ -1,18 +1,34 @@
 ===============================================
-
 STREAM is the de facto industry standard benchmark
-for measuring sustained memory bandwidth.
-
+   for measuring sustained memory bandwidth.
 Documentation for STREAM is on the web at:
    http://www.cs.virginia.edu/stream/ref.html
-
 ===============================================
-NEWS
+===============================================
+This "Versions" directory holds several variants of
+STREAM that are sometimes useful.
+===============================================
+===============================================
+Potentially Useful Versions:
+    2014-Oct-21  stream_mpi.c
+    2014-Oct-21  stream_5-10_posix_memalign.c
+    2014-Feb-14  stream_mpi.f
+    2012-Aug-14  stream_windows.c
+
+All older versions have been moved to the "Old"
+directory and should not be used.
+    2009-Mar-14  stream_omp.c
+    2004-Dec-12  stream_tuned.f
+    2003-May-27  stream_d.f
+    2003-Apr-08  second_cpu.f
+    2003-Apr-08  second_cpu.c
+    2003-Jan-10  stream_d.c
+===============================================
+NEWS AND NOTES
 ===============================================
 UPDATE: October 28 2014:
 
-"stream_mpi.c" released in the Versions directory.
-
+"stream_mpi.c" released.
 Based on Version 5.10 of stream.c, stream_mpi.c
 brings the following new features:
 * MPI implementation that *distributes* the arrays
@@ -23,8 +39,27 @@ brings the following new features:
   rather than using static arrays.  Different
   compiler flags may be needed for both portability
   and optimization.
-  See the READ.ME file in the Versions directory
-  for more details.
+  For example, on the TACC Stampede system using
+  the Intel compilers, my standard compile line
+  for a 4-node run is:
+	-----------------------------------------
+	mpicc -O3 -ffreestanding -openmp -mcmodel=medium -restrict -opt-streaming-stores always  \
+	    -DSTREAM_ARRAY_SIZE=80000000 -DNTIMES=20 -DVERBOSE   \
+	    stream_mpi.c -o stream_mpi
+
+	Notes on flags:
+	    -O3                                 works OK, as does -O2 in most cases
+	    -ffreestanding                      don't replace the Copy kernel with a library version
+	    -openmp                             use OpenMP
+	    -mcmodel=medium                     allow arrays to be bigger than 4 GiB
+	    -restrict                           allow use of the C99 "restrict" keyword
+	    -opt-streaming-stores always        force streaming stores
+
+	Notes on preprocessor variables:
+	    STREAM_ARRAY_SIZE                   elements per array (distributed across all ranks)
+	    NTIMES                              number of iterations to run
+	    VERBOSE                             print startup and shutdown timing information
+	-----------------------------------------
 * Error checking and timing done by all ranks and
   gathered by rank 0 for processing and output.
 * Timing code uses barriers to ensure correct
@@ -77,34 +112,13 @@ a number of long-awaited improvements have been made:
 * Change to the default output format to print fewer
   decimals for the bandwidth and more decimals for
   the min/max/avg execution times.
-
-
 ===============================================
-UPDATE: February 19 2009:
-
-The most recent "official" versions have been renamed
-"stream.f" and "stream.c" -- all other versions have
-been moved to the "Versions" subdirectory and should be
-considered obsolete.
-
-The "official" timer (was "second_wall.c") has been
-renamed "mysecond.c".   This is embedded in the C version
-("stream.c"), but still needs to be externally linked to
-the FORTRAN version ("stream.f").  The new version defines
-entry points both with and without trailing underscores,
-so it *should* link automagically with any Fortran compiler.
-
-===============================================
-
 STREAM is a project of "Dr. Bandwidth":
 	John D. McCalpin, Ph.D.
 	john@mccalpin.com
-
 ===============================================
-
 The STREAM web and ftp sites are currently hosted at
 the Department of Computer Science at the University of
 Virginia under the generous sponsorship of Professor Bill
 Wulf and Professor Alan Batson.
-
 ===============================================

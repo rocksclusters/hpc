@@ -1,5 +1,5 @@
-#
-# $Id: Makefile,v 1.25 2012/11/27 00:49:01 phil Exp $
+# --------------------------------------------------- -*- Makefile -*- --
+# $Id: Makefile,v 1.21 2012/11/27 00:49:01 phil Exp $
 #
 # @Copyright@
 # 
@@ -55,59 +55,76 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
-# Revision 1.25  2012/11/27 00:49:01  phil
+# Revision 1.21  2012/11/27 00:49:01  phil
 # Copyright Storm for Emerald Boa
 #
-# Revision 1.24  2012/05/06 05:49:09  phil
+# Revision 1.20  2012/05/06 05:49:09  phil
 # Copyright Storm for Mamba
 #
-# Revision 1.23  2011/07/23 02:31:05  phil
+# Revision 1.19  2011/07/23 02:31:05  phil
 # Viper Copyright
 #
-# Revision 1.22  2010/11/28 00:40:34  anoop
-# Solaris 64-bit support for iozone
+# Revision 1.18  2010/11/28 00:42:10  anoop
+# Solaris support for iperf-2.0.5
 #
-# Revision 1.21  2010/09/07 23:53:20  bruno
+# Revision 1.17  2010/09/14 17:10:00  bruno
+# don't patch if the patch files don't exist for this version/os
+#
+# Revision 1.16  2010/09/07 23:53:20  bruno
 # star power for gb
 #
-# Revision 1.20  2009/11/25 18:51:02  anoop
-# Upgraded iozone
+# Revision 1.15  2009/11/25 23:20:51  anoop
+# Mods to support sunos patching for iperf
 #
-# Revision 1.19  2009/10/07 17:10:22  bruno
-# workaround for a bad checkin
-#
-# Revision 1.18  2009/10/01 21:07:56  bruno
-# refresh for 5.3
-#
-# Revision 1.17  2009/05/01 19:07:18  mjk
+# Revision 1.14  2009/05/01 19:07:18  mjk
 # chimi con queso
 #
-# Revision 1.16  2008/10/18 00:56:09  mjk
+# Revision 1.13  2008/10/18 00:56:10  mjk
 # copyright 5.1
 #
-# Revision 1.15  2008/10/15 20:13:04  mjk
+# Revision 1.12  2008/10/15 20:13:04  mjk
 # - more changes to build outside of the tree
 # - removed some old fds-only targets
 #
-# Revision 1.14  2008/05/21 17:46:55  anoop
+# Revision 1.11  2008/05/21 17:46:55  anoop
 # Merginig code from mercurial.
 # This change makes the HPC roll more solaris friendly
 #
-# Revision 1.13  2008/03/06 23:41:53  mjk
+# Revision 1.10  2008/03/06 23:41:53  mjk
 # copyright storm on
 #
-# Revision 1.12  2007/06/23 04:03:39  mjk
+# Revision 1.9  2008/02/28 17:32:55  bruno
+# nuked the spec file for iperf
+#
+# Revision 1.8  2007/06/23 04:03:39  mjk
 # mars hill copyright
 #
-# Revision 1.11  2006/09/11 22:48:51  mjk
+# Revision 1.7  2006/09/11 22:48:52  mjk
 # monkey face copyright
 #
-# Revision 1.10  2006/08/10 00:10:56  mjk
+# Revision 1.6  2006/08/10 00:10:57  mjk
 # 4.2 copyright
 #
-# Revision 1.9  2006/07/01 16:56:46  bruno
-# refreshed iozone and converted the build procedure from SRPM-based to
-# tarball-based.
+# Revision 1.5  2005/10/12 18:09:46  mjk
+# final copyright for 4.1
+#
+# Revision 1.4  2005/09/16 01:03:24  mjk
+# updated copyright
+#
+# Revision 1.3  2005/05/24 21:22:49  mjk
+# update copyright, release is not any closer
+#
+# Revision 1.2  2005/03/14 21:31:37  fds
+# Fixed subtle name collision during build process.
+#
+# Revision 1.1  2005/02/17 01:32:02  bruno
+# moved iperf source into the hpc roll
+#
+# Revision 1.3  2003/05/29 02:37:13  bruno
+# added iperf 1.7
+#
+# Revision 1.2  2002/10/07 04:34:46  mjk
+# builds under new structure
 #
 #
 
@@ -116,40 +133,30 @@ REDHAT.ROOT     = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
-BINARIES	= iozone fileop Generate_Graphs gengnuplot.sh gnu3d.dem
-DOCS		= IOzone_msword_98.pdf Run_rules.doc IOzone_msword_98.doc \
-			Iozone_ps.gz 
+prep:
+	gunzip -c iperf-$(VERSION).tar.gz | $(TAR) -xf -
+	if [ -d patch-files/iperf-$(VERSION)/$(OS) ] ; then		\
+		(							\
+			cd patch-files/iperf-$(VERSION)/$(OS);		\
+			find . -type f | grep -v CVS |			\
+				cpio -pudv ../../../iperf-$(VERSION);	\
+			);						\
+	fi
 
 
-build:
-	$(TAR) xf $(NAME)$(IOZONE_VERSION).tar
-	-(cd patch-files && \
-		find $(NAME)$(IOZONE_VERSION) -type f | \
-		grep -v CVS | cpio -pudv ../;		\
+build: prep
+	(					\
+		cd iperf-$(VERSION) ;		\
+		./configure --prefix=$(PKGROOT) $(OSFLAGS);\
+		$(MAKE) ;			\
 	)
-	(								\
-		cd $(NAME)$(IOZONE_VERSION)/src/current;		\
-		$(MAKE) $(TARGET);					\
-	)
-
 install::
-	mkdir -p $(ROOT)/$(PKGROOT)/bin
-	(								\
-		cd $(NAME)$(IOZONE_VERSION)/src/current;		\
-		cp $(BINARIES) $(ROOT)/$(PKGROOT)/bin;			\
-	)
-	mkdir -p $(ROOT)/$(PKGROOT)/docs
-	(								\
-		cd $(NAME)$(IOZONE_VERSION)/docs;			\
-		cp $(DOCS) $(ROOT)/$(PKGROOT)/docs;			\
-	)
-	(								\
-		cd $(NAME)$(IOZONE_VERSION)/src/current;		\
-		cp Gnuplot.txt $(ROOT)/$(PKGROOT)/docs;			\
+	mkdir -p $(ROOT)/$(PKGROOT)
+	(							\
+		cd iperf-$(VERSION) ;				\
+		$(MAKE) prefix=$(ROOT)/$(PKGROOT) install ;	\
 	)
 
 
 clean::
-	rm -rf $(NAME)$(IOZONE_VERSION)
-	rm -f $(NAME).spec.in
-
+	rm -rf iperf-$(VERSION)
