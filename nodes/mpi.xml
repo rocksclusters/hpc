@@ -180,7 +180,7 @@
 <package os="linux">mpich3-ethernet-gnu</package>
 <package os="linux">rocks-openmpi</package>
 <package os="linux">openmpi</package>
-<package os="linux">openmpi-libs</package>
+<package os="linux" cond="rocks_version_major == 6">openmpi-libs</package>
 <package os="linux">openmpi-devel</package>
 <package os="linux">mpi-tests</package>
 

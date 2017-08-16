@@ -131,7 +131,6 @@
 #
 #
 
-PKGROOT         = /var/www/html/roll-documentation/hpc/$(VERSION)
 REDHAT.ROOT     = $(PWD)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
