@@ -33,6 +33,7 @@ moved an HPC-specific insert-ethers plugin into the HPC roll
 <package>gcc-gfortran</package>
 <package>opensm</package>
 <package>roll-hpc-usersguide</package>
+<package>libibverbs-devel</package>
 
 <post>
 <!-- turn on various services -->

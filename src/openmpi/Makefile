@@ -112,7 +112,7 @@ build:
 	(					\
 		cd openmpi-$(VERSION) ;		\
 		./configure --prefix=$(PKGROOT) \
-			--with-openib \
+			--with-verbs \
 			--with-sge \
 			--with-slurm \
 			--enable-static ;	\

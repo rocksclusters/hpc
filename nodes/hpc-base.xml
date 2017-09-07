@@ -82,6 +82,8 @@ initial release
 <package>libibumad-devel</package>
 <package>libibverbs</package>
 <package>libibverbs-devel</package>
+<package>libipathverbs</package>
+<package>libusnic_verbs</package>
 <package>libmlx4</package>
 <package>libmthca</package>
 <package>mpitests-openmpi</package>
