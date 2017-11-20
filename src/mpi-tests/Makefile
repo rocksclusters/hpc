@@ -92,8 +92,13 @@ include Rules.mk
 
 
 build:
-	$(MPICC) -o mpi-verify mpi-verify.c -lm
-	$(MPICC) -o mpi-ring mpi-ring.c -lm
+	( \
+		source /etc/profile.d/modules.sh;  		\
+		module load $(MODULE);				\
+		$(MPICC) -o mpi-verify mpi-verify.c -lm; 	\
+		$(MPICC) -o mpi-ring mpi-ring.c -lm;		\
+		module unload $(MODULE);			\
+	)
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/bin

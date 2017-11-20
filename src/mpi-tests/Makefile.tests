@@ -79,6 +79,6 @@
 #
 
 build:
-	/opt/openmpi/bin/mpicc -o mpi-verify mpi-verify.c -lm
-	/opt/openmpi/bin/mpicc -o mpi-ring mpi-ring.c -lm
+	mpicc -o mpi-verify mpi-verify.c -lm
+	mpicc -o mpi-ring mpi-ring.c -lm
 

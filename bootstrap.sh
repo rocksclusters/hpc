@@ -140,7 +140,7 @@ fi
 . $ROLLSROOT/etc/bootstrap-functions.sh
 
 if [ `./_os` == "linux" ]; then
-	yum -y install libibverbs libusnic_verbs
+	yum -y install libibverbs libibverbs-devel libusnic_verbs
 	install_os_packages hpc-base 
 	compile openmpi
 	install rocks-openmpi
